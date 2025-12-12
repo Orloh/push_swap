@@ -34,7 +34,6 @@ OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 DEP		= $(OBJ:.o=.d)
 
 # Build Rules
-all: $(NAME)
 
 $(OBJ_DIR):
 	mkdir -p $@
@@ -51,6 +50,7 @@ $(NAME): $(LIBFT) $(OBJ)
 	$(AR) $(NAME) $(OBJ)
 
 # Targets
+all: $(NAME)
 
 clean:
 	@$(PRINTF) "Cleaning up object files\n\n"
