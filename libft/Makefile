@@ -20,10 +20,7 @@ CFLAGS = -Wall -Werror -Wextra
 DEBUG_FLAGS = -Wall -Werror -Wextra -g -O0
 
 # Archiver
-AR = ar
-
-# Archiver flags
-ARFLAGS = rcs
+AR = ar rcs
 
 # Include directory
 ROOT = .
@@ -54,9 +51,11 @@ SRCS =		ft_atoi.c	ft_bzero.c	ft_calloc.c	ft_isalnum.c	\
 		ft_tolower.c	ft_toupper.c
 
 # Bonus Source files
-BONUS_SRCS =	ft_lstnew_bonus.c	ft_lstadd_front_bonus.c	ft_lstadd_back_bonus.c	\
-		ft_lstsize_bonus.c	ft_lstlast_bonus.c	ft_lstdelone_bonus.c	\
-		ft_lstclear_bonus.c	ft_lstiter_bonus.c	ft_lstmap_bonus.c	
+BONUS_SRCS =	ft_lstnew_bonus.c	ft_lstadd_front_bonus.c	\
+		ft_lstadd_back_bonus.c	ft_lstsize_bonus.c	\
+		ft_lstlast_bonus.c	ft_lstdelone_bonus.c	\
+		ft_lstclear_bonus.c	ft_lstiter_bonus.c	\
+		ft_lstmap_bonus.c	
 
 # Main.out
 MAIN = main.out
