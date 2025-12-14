@@ -1,0 +1,12 @@
+*.swp
+*.out
+*.o
+*.a
+*.d
+*.exe
+bin/
+obj/
+build/
+unity/
+test*.txt
+compile_flags.txt
