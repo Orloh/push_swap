@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-t_dllist	ft_dllstnew(void content*)
+t_dllist	*ft_dllstnew(void *content)
 {
 	t_dllist	*node;
 	node = malloc(sizeof(t_dllist));
