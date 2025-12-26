@@ -14,7 +14,6 @@
 SRC_DIR		= src
 INC_DIR		= inc
 OBJ_DIR		= obj
-TEST_DIR	= .test
 LIBFT_DIR	= libft
 
 # Files
@@ -23,7 +22,7 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 
 # Tools & Flags
 CC		= cc
-CFLAGS		= -Wall -Wextra -Werror -MD -I$(INC_DIR) -g -O0
+CFLAGS		= -Wall -Wextra -Werror -I $(INC_DIR) -g -O0
 RM		= rm -f
 AR		= ar rcs
 PRINTF		= printf
@@ -31,7 +30,6 @@ PRINTF		= printf
 # Source and object files
 SRC		= $(addprefix $(SRC_DIR)/,)
 OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
-DEP		= $(OBJ:.o=.d)
 
 # Build Rules
 
@@ -42,7 +40,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
-	$(MAKE) all -C $(LIBFT_DIR)
+	$(MAKE) bonus -C $(LIBFT_DIR)
 
 $(NAME): $(LIBFT) $(OBJ)
 	$(PRINTF) "Creating $(NAME) ...\n"
