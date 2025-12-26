@@ -24,13 +24,6 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-typedef struct s_dllist
-{
-	void			*content;
-	struct s_dllist	*next;
-	struct s_dllist	*prev;
-}					t_dllist;
-
 /* Required Functions */
 int			ft_atoi(const char *str);
 void		ft_bzero(void *ptr, size_t n);
@@ -77,9 +70,5 @@ void		ft_lstdelone(t_list *lst, void (*del)(void *));
 void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void(*del)(void *));
-
-/* Doublly Linked List Functions */
-void		ft_printlst(t_dllist *node);
-t_dllist	*ft_dllstnew(void *content);
 
 #endif
