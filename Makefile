@@ -6,30 +6,34 @@
 #    By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 17:19:15 by orhernan          #+#    #+#              #
-#    Updated: 2025/12/08 01:19:55 by orhernan         ###   ########.fr        #
+#    Updated: 2025/12/28 21:24:44 by orhernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+.DEFAULT_GOAL	:= all
+
 # Directories
-SRC_DIR		= src
-INC_DIR		= inc
-OBJ_DIR		= obj
-LIBFT_DIR	= libft
+SRC_DIR		:= src
+INC_DIR		:= inc
+OBJ_DIR		:= obj
+LIBFT_DIR	:= libft
+PRINTF_DIR	:= ft_printf
 
 # Files
-NAME		= push_swap
-LIBFT		= $(LIBFT_DIR)/libft.a
+NAME		:= push_swap.out
+LIBFT		:= $(LIBFT_DIR)/libft.a
+PRINTF		:= $(PRINTF_DIR)/libftprintf.a
 
 # Tools & Flags
-CC		= cc
-CFLAGS		= -Wall -Wextra -Werror -I $(INC_DIR) -g -O0
-RM		= rm -f
-AR		= ar rcs
-PRINTF		= printf
+CC		:= cc
+CFLAGS		:= -Wall -Wextra -Werror -I $(INC_DIR) -g -O0
+RM		:= rm -f
+AR		:= ar rcs
 
 # Source and object files
-SRC		= $(addprefix $(SRC_DIR)/,)
-OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
+SRC		:= $(addprefix $(SRC_DIR)/,	\
+		sort.c	parse.c	main_test.c)
+OBJ 		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # Build Rules
 
@@ -39,32 +43,28 @@ $(OBJ_DIR):
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBFT):
-	$(MAKE) bonus -C $(LIBFT_DIR)
+$(PRINTF):
+	$(MAKE) all -C $(PRINTF_DIR)
 
-$(NAME): $(LIBFT) $(OBJ)
-	$(PRINTF) "Creating $(NAME) ...\n"
-	cp $(LIBFT) $(NAME)
-	$(AR) $(NAME) $(OBJ)
+$(NAME): $(PRINTF) $(OBJ)
+	printf "Creating $(NAME) ...\n"
+	cp $(PRINTF) $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(PRINTF) -o $@
 
 # Targets
 all: $(NAME)
 
 clean:
-	@$(PRINTF) "Cleaning up object files\n\n"
-	$(MAKE) clean -C $(LIBFT_DIR) || true
+		@printf "Cleaning up object files\n\n"
+	$(MAKE) clean -C $(PRINTF_DIR) || true
 	$(RM) -r $(OBJ_DIR)
-	@$(PRINTF) "Removed object files\n"
+	@printf "Removed object files\n"
 
 fclean: clean
-	$(MAKE) fclean -C $(LIBFT_DIR) || true
-	$(MAKE) clean -C $(TEST_DIR)
+	$(MAKE) fclean -C $(PRINTF_DIR) || true
 	$(RM) $(NAME)
-	@$(PRINTF) "Removed $(NAME)\n"
+	@printf "Removed $(NAME)\n"
 
 re: fclean all
-
-test: all
-	$(MAKE) all -C $(TEST_DIR)
 
 .PHONY: all clean fclean re test
