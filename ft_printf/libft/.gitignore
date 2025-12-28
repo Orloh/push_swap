@@ -1,8 +1,0 @@
-*.swp
-*.out
-*.o
-*.a
-*.exe
-build/
-unity/
-main.c
