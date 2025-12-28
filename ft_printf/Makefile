@@ -6,28 +6,27 @@
 #    By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 17:19:15 by orhernan          #+#    #+#              #
-#    Updated: 2025/11/28 13:32:58 by orhernan         ###   ########.fr        #
+#    Updated: 2025/12/27 18:02:17 by orhernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL	:= all
 
 # Directories
 SRC_DIR		:= src
-INC_DIR		:= inc
+INC_DIR		:= ../inc
 OBJ_DIR		:= obj
-TEST_DIR	:= .test
-LIBFT_DIR	:= libft
+LIBFT_DIR	:= ../libft
 
 # Files
 NAME		:= libftprintf.a
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 # Tools & Flags
-CC			:= cc
+CC		:= cc
 CFLAGS		:= -Wall -Wextra -Werror -MD -I$(INC_DIR) -I$(LIBFT_DIR) -g -O0
-RM			:= rm -f
-AR			:= ar rcs
+RM		:= rm -f
+AR		:= ar rcs
 PRINTF		:= printf
 
 # Source and object files
@@ -36,7 +35,6 @@ SRC		= $(addprefix $(SRC_DIR)/,	\
 		ft_print_hex.c	ft_print_str.c		ft_print_ptr.c	\
 		ft_print_int.c	ft_print_uint.c		ft_putnbr_base_fd.c)
 OBJ 		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
-DEP		= $(OBJ:.o=.d)
 
 # Build Rules
 $(OBJ_DIR):
@@ -64,13 +62,9 @@ clean:
 
 fclean: clean
 	$(MAKE) fclean -C $(LIBFT_DIR) || true
-	$(MAKE) clean -C $(TEST_DIR)
 	$(RM) $(NAME)
 	@$(PRINTF) "Removed $(NAME)\n"
 
 re: fclean all
-
-test: all
-	$(MAKE) all -C $(TEST_DIR)
 
 .PHONY: all clean fclean re test
