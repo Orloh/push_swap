@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 22:14:11 by orhernan          #+#    #+#             */
-/*   Updated: 2025/10/16 22:24:34 by orhernan         ###   ########.fr       */
+/*   Updated: 2025/12/27 22:33:54 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*tmp;
-	size_t		total;
+	size_t	total;
 
 	if (count == 0 || size == 0)
 		return (malloc(0));
