@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 21:41:52 by orhernan          #+#    #+#             */
-/*   Updated: 2025/10/24 13:15:11 by orhernan         ###   ########.fr       */
+/*   Updated: 2025/12/28 21:20:52 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,27 @@ static int	get_word_count(const char *s, char c)
 	return (word_count);
 }
 
-static void	*free_mem(char **s, size_t n)
+static void	var_init(size_t *i, int *j, int *w_start)
+{
+	*i = 0;
+	*j = 0;
+	*w_start = -1;
+}
+
+void	*ft_free_split(char **s)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < n)
+	if (!s)
+		return (NULL);
+	while (s[i])
 	{
 		free(s[i]);
 		i++;
 	}
 	free(s);
 	return (NULL);
-}
-
-static void	var_init(size_t *i, int *j, int *w_start)
-{
-	*i = 0;
-	*j = 0;
-	*w_start = -1;
 }
 
 char	**ft_split(const char *s, char c)
@@ -73,7 +75,7 @@ char	**ft_split(const char *s, char c)
 		{
 			str_array[j] = ft_substr(s, w_start, i - w_start);
 			if (!str_array[j])
-				return (free_mem(str_array, j));
+				return (ft_free_split(str_array));
 			w_start = -1;
 			j++;
 		}
