@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 00:46:34 by orhernan          #+#    #+#             */
-/*   Updated: 2025/12/28 22:44:10 by orhernan         ###   ########.fr       */
+/*   Updated: 2025/12/29 17:21:19 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,16 @@ typedef struct s_node_content
 {
 	int	value;
 	int	rank;
-}	t_stack_node;
+}	t_node_content;
 
-int	*ft_sort_array(int *arr, int size);
-int	*ft_parse_args(int argc, char **argv, int *size);
+typedef struct s_int_arr
+{
+	int	*data;
+	int	size;
+}	t_int_arr;
+
+void	ft_sort_array(t_int_arr arr);
+t_int_arr	ft_parse_args(int argc, char **argv);
+void	ft_free_int_arr(t_int_arr arr);
 
 #endif

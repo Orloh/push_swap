@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/27 14:13:21 by orhernan          #+#    #+#             */
-/*   Updated: 2025/12/28 22:43:56 by orhernan         ###   ########.fr       */
+/*   Created: 2025/12/29 15:56:36 by orhernan          #+#    #+#             */
+/*   Updated: 2025/12/29 17:21:17 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*
- * Sorts an array of integers in place and returns a pointer
- */
-void	ft_sort_array(t_int_arr arr)
+void	ft_error(void)
 {
-	int	i;
-	int	j;
-	int	tmp;
-
-	if (!arr.data || arr.size <= 1)
-		return ;
-	i = 1;
-	while (i < arr.size)
-	{
-		tmp = arr.data[i];
-		j = i - 1;
-		while (j >= 0 && arr.data[j] > tmp)
-		{
-			arr.data[j + 1] = arr.data[j];
-			j--;
-		}
-		arr.data[j + 1] = tmp;
-		i++;
-	}
-	return ;
+	ft_putstr_fd("Error\n", STDOUT_FILENO);
+	exit(1);
 }
 
+int	main(int argc, char **argv)
+{
+	//t_list	*stack_a;
+	//t_list	*stack_b;
+	t_int_arr	num_arr;
 
+	if (argc < 2)
+		return (0);
+	num_arr = ft_parse_args(argc, argv);
+	if (!num_arr.data)
+		ft_error();
+
+	ft_free_int_arr(num_arr);
+	return (0);
+}
