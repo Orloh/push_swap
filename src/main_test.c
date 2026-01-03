@@ -41,28 +41,28 @@ int	main(void)
 	char	*test1[] = {"push_swap", "1", "42", "-5", NULL};
 	res = ft_parse_args(4, test1);
 	print_arr(res);
-	ft_free_int_arr(res);
+	ft_free_int_arr(&res);
 
 	// Test2
 	printf("\n--- TEST 2: Quoted String (\"100 200 300 1000\") ---\n");
 	char	*test2[] = {"push_swap", "100 200 300 1000", NULL};
 	res = ft_parse_args(2, test2);
 	print_arr(res);
-	ft_free_int_arr(res);
+	ft_free_int_arr(&res);
 	
 	// Test 3
 	printf("\n--- TEST 3: Overflow (Should be NULL) ---\n");
 	char	*test3[] = {"push_swap", "2147483648", NULL};
 	res = ft_parse_args(2, test3);
 	print_arr(res);
-	ft_free_int_arr(res);
+	ft_free_int_arr(&res);
 
 	// Test 4
 	printf("\n--- TEST 4: Alpha chars (Should be NULL) ---\n");
 	char	*test4[] = {"push_swap", "12", "34a", "56", NULL};
 	res = ft_parse_args(2, test4);
 	print_arr(res);
-	ft_free_int_arr(res);
+	ft_free_int_arr(&res);
 
 	// Test 5
 	printf("\n--- TEST 5: Random Sort (500 integers) ---\n");	
@@ -83,7 +83,7 @@ int	main(void)
 	printf("First 5 unsorted: %d %d %d %d %d\n", res.data[0], res.data[1], res.data[2], res.data[3], res.data[4]);
 	ft_sort_array(res);
 	printf("First 5 sorted: %d %d %d %d %d\n", res.data[0], res.data[1], res.data[2], res.data[3], res.data[4]);
-	ft_free_int_arr(res);
+	ft_free_int_arr(&res);
 
 	// Test 6
 	printf("\n--- TEST 6: Ordered Array (500 integers) ---\n");	
@@ -99,7 +99,7 @@ int	main(void)
 		res.data[i] = i + 1;
 	ft_sort_array(res);
 	print_arr(res);
-	ft_free_int_arr(res);
+	ft_free_int_arr(&res);
 
 	// Test 7
 	printf("\n--- TEST 7: Reversed Array (500 integers) ---\n");	
@@ -112,13 +112,10 @@ int	main(void)
 	}
 	i = 5;
 	while (--i >= 0)
-	{
-		i--;
 		res.data[i] = i + 1;
-	}
 	ft_sort_array(res);
 	print_arr(res);
-	ft_free_int_arr(res);
+	ft_free_int_arr(&res);
 
 	return (0);
 }

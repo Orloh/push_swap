@@ -44,12 +44,12 @@ static int	ft_is_valid_int(const char *str, long *val)
 	return (1);
 }
 
-void	ft_free_int_arr(t_int_arr int_arr)
+void	ft_free_int_arr(t_int_arr *int_arr)
 {
-	if (int_arr.data)
-		free(int_arr.data);
-	int_arr.data = NULL;
-	int_arr.size = 0;
+	if (int_arr->data)
+		free(int_arr->data);
+	int_arr->data = NULL;
+	int_arr->size = 0;
 }
 
 /*
@@ -90,7 +90,7 @@ t_int_arr	ft_parse_args(int argc, char **argv)
 		{
 			if (argc == 2)
 				ft_free_split(tmp_args);
-			ft_free_int_arr(int_arr);
+			ft_free_int_arr(&int_arr);
 			return (int_arr);
 		}
 		int_arr.data[i] = (int)val;
