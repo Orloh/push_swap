@@ -6,7 +6,7 @@
 #    By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 17:19:15 by orhernan          #+#    #+#              #
-#    Updated: 2025/12/27 18:02:17 by orhernan         ###   ########.fr        #
+#    Updated: 2026/01/05 19:07:32 by orhernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
-	$(MAKE) all -C $(LIBFT_DIR)
+	$(MAKE) bonus -C $(LIBFT_DIR)
 
 $(NAME): $(LIBFT) $(OBJ)
 	$(PRINTF) "Creating $(NAME) ...\n"

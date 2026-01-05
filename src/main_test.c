@@ -6,10 +6,11 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 20:58:05 by orhernan          #+#    #+#             */
-/*   Updated: 2025/12/28 22:44:02 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/01/05 19:13:41 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "push_swap.h"
 #include <stdio.h>
 #include <time.h>
@@ -29,6 +30,28 @@ void	 print_arr(t_int_arr arr)
 		i++;
 	}
 	printf("\nSize: %d\n", arr.size);
+}
+
+t_node_content	*ft_new_content(int val, int rank)
+{
+	t_node_content *c = malloc(sizeof(t_node_content));
+	if (!c) return (NULL);
+	c->value = val;
+	c->rank = rank;
+	return (c);
+}
+
+void	print_stack(char *name, t_list *s)
+{
+	printf("Stack %s: ", name);
+	if (!s) printf ("(empty)");
+	while (s)
+	{
+		t_node_content *c = (t_node_content *)s->content;
+		printf("[%d]) ", c->value);
+		s = s->next;
+	}
+	printf("\n");
 }
 
 int	main(void)
@@ -116,6 +139,42 @@ int	main(void)
 	ft_sort_array(res);
 	print_arr(res);
 	ft_free_int_arr(&res);
+
+
+	
+	printf("\n--- OPERATION TESTING ---\n");	
+	t_list	*a = NULL;
+	t_list	*b = NULL;
+
+	// Test 8
+	printf("\n--- TEST 8: Unit Test Push (pa/pb)  ---\n");
+	ft_lstadd_back(&a, ft_lstnew(ft_new_content(10, 0)));
+	ft_lstadd_back(&a, ft_lstnew(ft_new_content(10, 0)));
+	
+	printf("Initial State:\n");
+	print_stack("A", a);
+	print_stack("B", b);
+
+	// Test pb: A -> B
+	printf("\nAction: pb\n");
+	pb(&a, &b);
+	print_stack("A", a);
+	print_stack("B", b);
+
+	// Test pa: B -> A
+	printf("\nAction: pa\n");
+	pa(&a, &b);
+	print_stack("A", a);
+	print_stack("B", b);
+
+	// Test Edge case: pa on empty stack
+	printf("\nAction: pa on empty B stack (Should do nothing)\n");
+	pa(&a, &b);
+	print_stack("A", a);
+	print_stack("B", b);
+
+	ft_lstclear(&a, free);
+	ft_lstclear(&b, free);
 
 	return (0);
 }
