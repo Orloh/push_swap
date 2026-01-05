@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 00:46:34 by orhernan          #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/01/05 19:02:25 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,8 @@ typedef struct s_int_arr
 void	ft_sort_array(t_int_arr arr);
 t_int_arr	ft_parse_args(int argc, char **argv);
 void	ft_free_int_arr(t_int_arr *arr);
+t_list	*ft_init_stack(t_int_arr *arr);
+void	pa(t_list **stack_a, t_list **stack_b);
+void	pb(t_list **stack_a, t_list **stack_b);
 
 #endif
