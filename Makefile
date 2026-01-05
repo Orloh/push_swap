@@ -6,7 +6,7 @@
 #    By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 17:19:15 by orhernan          #+#    #+#              #
-#    Updated: 2025/12/28 21:24:44 by orhernan         ###   ########.fr        #
+#    Updated: 2026/01/05 19:07:15 by orhernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ AR		:= ar rcs
 
 # Source and object files
 SRC		:= $(addprefix $(SRC_DIR)/,	\
-		sort.c	parse.c	main_test.c)
+		sort.c	parse.c	main_test.c	push_op.c	stack_init_dummy.c)
 OBJ 		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # Build Rules
@@ -55,7 +55,7 @@ $(NAME): $(PRINTF) $(OBJ)
 all: $(NAME)
 
 clean:
-		@printf "Cleaning up object files\n\n"
+	@printf "Cleaning up object files\n\n"
 	$(MAKE) clean -C $(PRINTF_DIR) || true
 	$(RM) -r $(OBJ_DIR)
 	@printf "Removed object files\n"
