@@ -13,6 +13,7 @@
 #include "libft.h"
 #include "push_swap.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 void	 print_arr(t_int_arr arr)
@@ -43,15 +44,16 @@ t_node_content	*ft_new_content(int val, int rank)
 
 void	print_stack(char *name, t_list *s)
 {
-	printf("Stack %s: ", name);
-	if (!s) printf ("(empty)");
+	printf("Stack %s (Value [Rank]):", name);
+	if (!s)
+		printf("(empty)");
 	while (s)
 	{
 		t_node_content *c = (t_node_content *)s->content;
-		printf("[%d]) ", c->value);
+		printf("%d [%d] -> ", c->value, c->rank);
 		s = s->next;
 	}
-	printf("\n");
+	printf("NULL\n");
 }
 
 int	main(void)
@@ -104,7 +106,7 @@ int	main(void)
 		i++;
 	}
 	printf("First 5 unsorted: %d %d %d %d %d\n", res.data[0], res.data[1], res.data[2], res.data[3], res.data[4]);
-	ft_sort_array(res);
+	ft_sort_array(&res);
 	printf("First 5 sorted: %d %d %d %d %d\n", res.data[0], res.data[1], res.data[2], res.data[3], res.data[4]);
 	ft_free_int_arr(&res);
 
@@ -120,7 +122,7 @@ int	main(void)
 	i = -1;
 	while (++i < 5)
 		res.data[i] = i + 1;
-	ft_sort_array(res);
+	ft_sort_array(&res);
 	print_arr(res);
 	ft_free_int_arr(&res);
 
@@ -136,20 +138,60 @@ int	main(void)
 	i = 5;
 	while (--i >= 0)
 		res.data[i] = i + 1;
-	ft_sort_array(res);
+	ft_sort_array(&res);
 	print_arr(res);
 	ft_free_int_arr(&res);
 
+	// Test 8
+	printf("\n--- TEST 8: Stack Init (Scrambled: 42 1 -5 10) ---\n");
+	char	*test8[] = {"push_swap", "42", "1", "-5", "10", NULL};
+	res = ft_parse_args(5, test8);
+	t_list	*stack_a = ft_init_stack(&res);
+	print_stack("A", stack_a);
+	ft_lstclear(&stack_a, free);
+	ft_free_int_arr(&res);
 
-	
+	// Test 9
+	printf("\n--- TEST 9: Stack Init (Duplicates/Negative Mix) ---\n");
+	char	*test9[] = {"push_swap", "100", "-100", "0", "50", NULL};
+	res = ft_parse_args(5, test9);
+	stack_a = ft_init_stack(&res);
+	print_stack("A", stack_a);
+	ft_lstclear(&stack_a, free);
+	ft_free_int_arr(&res);
+
+	// Test 10
+	printf("\n--- TEST 10: Stack Init (Single Element) ---\n");
+	char	*test10[] = {"push_swap", "42", NULL};
+	res = ft_parse_args(2, test10);
+	stack_a = ft_init_stack(&res);
+	print_stack("A", stack_a);
+	ft_lstclear(&stack_a, free);
+	ft_free_int_arr(&res);
+
+	// Test 11
+	printf("\n--- TEST 11: Stack Init (Duplicates) 1 5 2 5 ---\n");
+	char	*test11[] = {"push_swap", "1", "5", "2", "5", NULL};
+	res = ft_parse_args(5, test11);
+	stack_a = ft_init_stack(&res);
+	if (stack_a == NULL)
+		printf("Result: NULL (Duplicates detected succesfully)\n");
+	else
+	{
+		printf("Error: Stack initialized despite duplicates!\n");
+		print_stack("DUP", stack_a);
+		ft_lstclear(&stack_a, free);
+	}
+	ft_free_int_arr(&res);
+
 	printf("\n--- OPERATION TESTING ---\n");	
 	t_list	*a = NULL;
 	t_list	*b = NULL;
 
 	// Test 8
-	printf("\n--- TEST 8: Unit Test Push (pa/pb)  ---\n");
+	printf("\n--- TEST 9: Unit Test Push (pa/pb)  ---\n");
 	ft_lstadd_back(&a, ft_lstnew(ft_new_content(10, 0)));
-	ft_lstadd_back(&a, ft_lstnew(ft_new_content(10, 0)));
+	ft_lstadd_back(&a, ft_lstnew(ft_new_content(20, 1)));
 	
 	printf("Initial State:\n");
 	print_stack("A", a);
