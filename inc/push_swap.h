@@ -31,7 +31,7 @@ typedef struct s_int_arr
 	int	size;
 }	t_int_arr;
 
-void	ft_sort_array(t_int_arr arr);
+void	ft_sort_array(t_int_arr *arr);
 t_int_arr	ft_parse_args(int argc, char **argv);
 void	ft_free_int_arr(t_int_arr *arr);
 t_list	*ft_init_stack(t_int_arr *arr);
