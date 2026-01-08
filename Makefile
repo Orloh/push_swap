@@ -32,7 +32,7 @@ AR		:= ar rcs
 
 # Source and object files
 SRC		:= $(addprefix $(SRC_DIR)/,	\
-		sort.c	parse.c	main_test.c	push_op.c	stack_init_dummy.c)
+		sort.c	parse.c	main_test.c	push_op.c	stack.c)
 OBJ 		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # Build Rules
