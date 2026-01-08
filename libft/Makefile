@@ -28,16 +28,9 @@ ROOT := .
 # Preprocessor flags
 CPPFLAGS := -I$(ROOT)
 
-# Detect operating system to select file deleting program
-ifeq ($(OS),Windows_NT)
-    # Windows: Use del /Q
-    RM = del /Q
-    EXTENSION = exe
-else
-    # Linux/Unix: Use rm -f
-    RM = rm -f
-    EXTENSION = out
-endif
+RM := rm -f
+
+EXTENSION := out
 
 # Source files
 SRCS :=		ft_atoi.c	ft_bzero.c	ft_calloc.c	ft_isalnum.c	\
@@ -82,7 +75,7 @@ all: $(NAME)
 # Add bonus to realese library
 bonus: .bonus
 
-.bonus: $(OBJS) $(BONUS_OBJS)
+.bonus: all $(OBJS) $(BONUS_OBJS)
 	@printf "Updating $(NAME) with bonus functions...\n"
 	$(AR) r $(NAME) $(BONUS_OBJS)
 	@touch .bonus
