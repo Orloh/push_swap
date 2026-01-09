@@ -38,5 +38,3 @@ void	ft_sort_array(t_int_arr *arr)
 	}
 	return ;
 }
-
-
