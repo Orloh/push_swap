@@ -20,24 +20,23 @@
 static int	ft_is_valid_int(const char *str, long *val)
 {
 	long	res;
-	int	i;
-	int	sign;
+	int		i;
+	int		sign;
 
 	i = 0;
 	res = 0;
 	sign = 1;
-
 	if (str[i] == '-' || str[i] == '+')
 		if (str[i++] == '-')
 			sign = -1;
 	if (!str[i])
 		return (0);
-	while(str[i])
+	while (str[i])
 	{
-		if(!ft_isdigit(str[i]))
+		if (!ft_isdigit(str[i]))
 			return (0);
 		res = res * 10 + (str[i++] - '0');
-		if((sign * res) > INT_MAX || (sign * res) < INT_MIN)
+		if ((sign * res) > INT_MAX || (sign * res) < INT_MIN)
 			return (0);
 	}
 	*val = sign * res;
@@ -61,41 +60,26 @@ void	ft_free_int_arr(t_int_arr *int_arr)
 t_int_arr	ft_parse_args(int argc, char **argv)
 {
 	t_int_arr	int_arr;
-	char	**tmp_args;
-	long	val;
-	int		i;
+	char		**tmp_args;
+	long		val;
+	int			i;
 
-	int_arr.data = NULL;
 	int_arr.size = 0;
+	tmp_args = argv + 1;
 	if (argc == 2)
 		tmp_args = ft_split(argv[1], ' ');
-	else
-		tmp_args = argv + 1;
-	if (!tmp_args || !tmp_args[0])
-		return (int_arr);
-	while (tmp_args[int_arr.size])
+	while (tmp_args && tmp_args[int_arr.size])
 		int_arr.size++;
 	int_arr.data = ft_calloc((int_arr.size), sizeof(int));
-	if (!int_arr.data)
-	{
-		if (argc == 2)
-			ft_free_split(tmp_args);
-		int_arr.size = 0;
-		return (int_arr);
-	}
 	i = -1;
-	while (++i < int_arr.size)
+	while (int_arr.data && ++i < int_arr.size)
 	{
-		if (!ft_is_valid_int(tmp_args[i], &val))
-		{
-			if (argc == 2)
-				ft_free_split(tmp_args);
+		if (ft_is_valid_int(tmp_args[i], &val))
+			int_arr.data[i] = (int)val;
+		else
 			ft_free_int_arr(&int_arr);
-			return (int_arr);
-		}
-		int_arr.data[i] = (int)val;
 	}
-	if (argc == 2)
+	if (argc == 2 && tmp_args)
 		ft_free_split(tmp_args);
 	return (int_arr);
 }
