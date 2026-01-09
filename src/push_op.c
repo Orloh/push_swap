@@ -20,8 +20,7 @@ static int	ft_push(t_list **src, t_list **dst)
 		return (0);
 	tmp = *src;
 	*src = (*src)->next;
-	tmp->next = *dst;
-	*dst = tmp;
+	ft_lstadd_front(dst, tmp);
 	return (1);
 }
 
