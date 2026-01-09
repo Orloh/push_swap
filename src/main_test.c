@@ -16,6 +16,23 @@
 #include <stdlib.h>
 #include <time.h>
 
+//--- COLOR MACROS ---
+#define RED "\033[1;31m"
+#define GREEN "\033[1;32m"
+#define RESET "\033[0m"
+
+int	is_sorted(t_int_arr *arr)
+{
+	int	i = -1;
+	if (!arr->data || arr->size == 0) return (0);
+	while (++i < arr->size -1)
+	{
+		if (arr->data[i] > arr->data[i + 1])
+			return (0);
+	}
+	return (1);
+}
+
 void	 print_arr(t_int_arr arr)
 {
 	int i = 0;
@@ -66,6 +83,10 @@ int	main(void)
 	char	*test1[] = {"push_swap", "1", "42", "-5", NULL};
 	res = ft_parse_args(4, test1);
 	print_arr(res);
+	if (res.data != NULL && res.size == 3)
+		printf(GREEN "[PASS] Array created correctly.\n" RESET);
+	else
+		printf(RED "[FAIL] Array creation failed.\n" RESET);
 	ft_free_int_arr(&res);
 
 	// Test2
@@ -73,6 +94,10 @@ int	main(void)
 	char	*test2[] = {"push_swap", "100 200 300 1000", NULL};
 	res = ft_parse_args(2, test2);
 	print_arr(res);
+	if (res.data != NULL && res.size == 4)
+		printf(GREEN "[PASS] Split args parsed correctly.\n" RESET);
+	else
+		printf(RED "[FAIL] Split args parsing failed.\n" RESET);
 	ft_free_int_arr(&res);
 	
 	// Test 3
@@ -80,6 +105,10 @@ int	main(void)
 	char	*test3[] = {"push_swap", "2147483648", NULL};
 	res = ft_parse_args(2, test3);
 	print_arr(res);
+	if (res.data == NULL)
+		printf(GREEN "[PASS] Overflow detected succesfully (NULL).\n" RESET);
+	else
+		printf(RED "[FAIL] Overflow NOT detected (Retrned pointer).\n" RESET);
 	ft_free_int_arr(&res);
 
 	// Test 4
@@ -87,6 +116,10 @@ int	main(void)
 	char	*test4[] = {"push_swap", "12", "34a", "56", NULL};
 	res = ft_parse_args(2, test4);
 	print_arr(res);
+	if (res.data == NULL) 
+		printf(GREEN "[PASS] Invalid input detected successfully (NULL).\n" RESET);
+	else
+		printf(RED "[FAIL] Invalid input NOT detected.\n" RESET);
 	ft_free_int_arr(&res);
 
 	// Test 5
@@ -97,6 +130,7 @@ int	main(void)
 	if (!res.data)
 	{
 		res.size = 0;
+		printf(RED "[FAIL] Malloc error in Test 5 setup.\n");
 		return (1);
 	}
 	srand(time(NULL));
@@ -108,10 +142,14 @@ int	main(void)
 	printf("First 5 unsorted: %d %d %d %d %d\n", res.data[0], res.data[1], res.data[2], res.data[3], res.data[4]);
 	ft_sort_array(&res);
 	printf("First 5 sorted: %d %d %d %d %d\n", res.data[0], res.data[1], res.data[2], res.data[3], res.data[4]);
+	if (is_sorted(&res)) 
+		printf(GREEN "[PASS] Array is sorted.\n" RESET);
+	else
+		printf(RED "[FAIL] Array is NOT sorted.\n" RESET);
 	ft_free_int_arr(&res);
 
 	// Test 6
-	printf("\n--- TEST 6: Ordered Array (500 integers) ---\n");	
+	printf("\n--- TEST 6: Ordered Array (5 integers) ---\n");	
 	res.size = 5;
 	res.data = (int *)ft_calloc(res.size, sizeof(int));
 	if (!res.data)
@@ -124,10 +162,14 @@ int	main(void)
 		res.data[i] = i + 1;
 	ft_sort_array(&res);
 	print_arr(res);
+	if (is_sorted(&res)) 
+		printf(GREEN "[PASS] Array is sorted.\n" RESET);
+	else
+		printf(RED "[FAIL] Array is NOT sorted.\n" RESET);
 	ft_free_int_arr(&res);
 
 	// Test 7
-	printf("\n--- TEST 7: Reversed Array (500 integers) ---\n");	
+	printf("\n--- TEST 7: Reversed Array (5 integers) ---\n");	
 	res.size = 5;
 	res.data = (int *)ft_calloc(res.size, sizeof(int));
 	if (!res.data)
@@ -140,6 +182,10 @@ int	main(void)
 		res.data[i] = i + 1;
 	ft_sort_array(&res);
 	print_arr(res);
+	if (is_sorted(&res)) 
+		printf(GREEN "[PASS] Array is sorted.\n" RESET);
+	else
+		printf(RED "[FAIL] Array is NOT sorted.\n" RESET);
 	ft_free_int_arr(&res);
 
 	// Test 8
@@ -148,6 +194,10 @@ int	main(void)
 	res = ft_parse_args(5, test8);
 	t_list	*stack_a = ft_init_stack(&res);
 	print_stack("A", stack_a);
+	if (stack_a != NULL && ft_lstsize(stack_a) == 4) 
+		printf(GREEN "[PASS] Stack A initialized.\n" RESET);
+	else
+		printf(RED "[FAIL] Stack A initializaion error.\n" RESET);
 	ft_lstclear(&stack_a, free);
 	ft_free_int_arr(&res);
 
@@ -157,6 +207,10 @@ int	main(void)
 	res = ft_parse_args(5, test9);
 	stack_a = ft_init_stack(&res);
 	print_stack("A", stack_a);
+	if (stack_a != NULL && ft_lstsize(stack_a) == 4) 
+		printf(GREEN "[PASS] Stack A initialized with negatives.\n" RESET);
+	else
+		printf(RED "[FAIL] Stack A initializaion error.\n" RESET);
 	ft_lstclear(&stack_a, free);
 	ft_free_int_arr(&res);
 
@@ -166,6 +220,10 @@ int	main(void)
 	res = ft_parse_args(2, test10);
 	stack_a = ft_init_stack(&res);
 	print_stack("A", stack_a);
+	if (stack_a != NULL && ft_lstsize(stack_a) == 1) 
+		printf(GREEN "[PASS] Single element stack initialized.\n" RESET);
+	else
+		printf(RED "[FAIL] Single element stack initializaion error.\n" RESET);
 	ft_lstclear(&stack_a, free);
 	ft_free_int_arr(&res);
 
@@ -175,11 +233,11 @@ int	main(void)
 	res = ft_parse_args(5, test11);
 	stack_a = ft_init_stack(&res);
 	if (stack_a == NULL)
-		printf("Result: NULL (Duplicates detected succesfully)\n");
+		printf(GREEN "[PASS] NULL (Duplicates detected succesfully)\n" RESET);
 	else
 	{
-		printf("Error: Stack initialized despite duplicates!\n");
 		print_stack("DUP", stack_a);
+		printf(RED "[FAIL] Stack initialized despite duplicates!\n" RESET);
 		ft_lstclear(&stack_a, free);
 	}
 	ft_free_int_arr(&res);
@@ -202,18 +260,30 @@ int	main(void)
 	pb(&a, &b);
 	print_stack("A", a);
 	print_stack("B", b);
+	if (ft_lstsize(a) == 1 && ft_lstsize(b) == 1)
+		printf(GREEN "[PASS] pb executed correctly.\n" RESET);
+	else
+		printf(RED "[FAIL] pb execution failed (Stack size mismatch).\n" RESET);
 
 	// Test pa: B -> A
 	printf("\nAction: pa\n");
 	pa(&a, &b);
 	print_stack("A", a);
 	print_stack("B", b);
+	if (ft_lstsize(a) == 2 && ft_lstsize(b) == 0)
+		printf(GREEN "[PASS] pa executed correctly.\n" RESET);
+	else
+		printf(RED "[FAIL] pa execution failed (Stack size mismatch).\n" RESET);
 
 	// Test Edge case: pa on empty stack
 	printf("\nAction: pa on empty B stack (Should do nothing)\n");
 	pa(&a, &b);
 	print_stack("A", a);
 	print_stack("B", b);
+	if (ft_lstsize(a) == 2 && ft_lstsize(b) == 0)
+		printf(GREEN "[PASS] pa on empty stack ignored correctly.\n" RESET);
+	else
+		printf(RED "[FAIL] pa modified an empty stack.\n" RESET);
 
 	ft_lstclear(&a, free);
 	ft_lstclear(&b, free);
