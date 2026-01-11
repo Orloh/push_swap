@@ -43,6 +43,10 @@ static int	ft_is_valid_int(const char *str, long *val)
 	return (1);
 }
 
+/*
+ * Frees the data array of t_int_arr and sets it to NULL.
+ * Resets size to 0.
+*/
 void	ft_free_int_arr(t_int_arr *int_arr)
 {
 	if (int_arr->data)
@@ -55,7 +59,7 @@ void	ft_free_int_arr(t_int_arr *int_arr)
  * Normalizes and validates command line args.
  * Handles both single strings ("1 2 3") and multiple args (1 2 3).
  * It checks for non-digits and integer overflows.
- * Returns a malloc'd int array or NULL if any validation fails.
+ * Returns an t_int_arr struct on  failure reutrns a struct with data = NULL
  */
 t_int_arr	ft_parse_args(int argc, char **argv)
 {
