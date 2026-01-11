@@ -40,7 +40,7 @@ int	ft_get_rank(int val, t_int_arr *sorted_arr)
 }
 
 /*
- *TODO: Function description
+ * Allocates and initializes a t_node_content struct
  */
 t_node_content	*ft_create_content(int val, t_int_arr *sorted_arr)
 {
@@ -73,6 +73,8 @@ t_list	*ft_init_stack(t_int_arr *arr)
 		return (NULL);
 	ft_memcpy(sorted_copy.data, arr->data, arr->size * sizeof(int));
 	ft_sort_array(&sorted_copy);
+	if (!ft_is_sorted(&sorted_copy))
+		return (NULL);
 	new_stack = NULL;
 	i = -1;
 	while (++i < arr->size)
