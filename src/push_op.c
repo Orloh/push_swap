@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 17:28:33 by orhernan          #+#    #+#             */
-/*   Updated: 2026/01/05 19:02:33 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/01/11 18:02:13 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ static int	ft_push(t_list **src, t_list **dst)
 	return (1);
 }
 
-void	pa(t_list **stack_a, t_list **stack_b)
+void	pa(t_stacks *stacks)
 {
-	if(ft_push(stack_b, stack_a))
+	if(ft_push(&(stacks->b), &(stacks->a)))
 		ft_printf("pa\n");
 }
 
-void	pb(t_list **stack_a, t_list **stack_b)
+void	pb(t_stacks *stacks)
 {
-	if(ft_push(stack_a, stack_b))
+	if(ft_push(&(stacks->a), &(stacks->b)))
 		ft_printf("pb\n");
 }
