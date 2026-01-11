@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 20:58:05 by orhernan          #+#    #+#             */
-/*   Updated: 2026/01/11 18:24:11 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:10:12 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,6 +310,41 @@ int	main(void)
 	// Test sa: B[0] <-> B[1]
 	printf("\nAction: sb\n");
 	sb(stacks);
+	print_stack("B", stacks->b);
+	if (ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->b->content)->rank == 1)
+		printf(GREEN "[PASS] sb executed correctly.\n" RESET);
+	else
+		printf(RED "[FAIL] sb execution failed (Stack didn't change).\n" RESET);
+
+	ft_lstclear(&(stacks->a), free);
+	ft_lstclear(&(stacks->b), free);
+	
+	// Test 13
+	printf("\n--- TEST 14: Unit Test rotate (ra/rb)  ---\n");
+	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(10, 0)));
+	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(20, 1)));
+	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(30, 2)));
+	
+	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(40, 0)));
+	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(50, 1)));
+	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(60, 2)));
+	
+	printf("Initial State:\n");
+	print_stack("A", stacks->a);
+	print_stack("B", stacks->b);
+
+	// Test ra
+	printf("\nAction: ra\n");
+	ra(stacks);
+	print_stack("A", stacks->a);
+	if (ft_lstsize(stacks->a) == 3 && ((t_node_content *)stacks->a->content)->rank == 1)
+		printf(GREEN "[PASS] sa executed correctly.\n" RESET);
+	else
+		printf(RED "[FAIL] sa execution failed (Stack didn't change).\n" RESET);
+
+	// Test rb
+	printf("\nAction: rb\n");
+	rb(stacks);
 	print_stack("B", stacks->b);
 	if (ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->b->content)->rank == 1)
 		printf(GREEN "[PASS] sb executed correctly.\n" RESET);
