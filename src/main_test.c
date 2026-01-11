@@ -114,7 +114,7 @@ int	main(void)
 	// Test 4
 	printf("\n--- TEST 4: Alpha chars (Should be NULL) ---\n");
 	char	*test4[] = {"push_swap", "12", "34a", "56", NULL};
-	res = ft_parse_args(2, test4);
+	res = ft_parse_args(4, test4);
 	print_arr(res);
 	if (res.data == NULL) 
 		printf(GREEN "[PASS] Invalid input detected successfully (NULL).\n" RESET);
