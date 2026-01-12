@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 00:46:34 by orhernan          #+#    #+#             */
-/*   Updated: 2026/01/11 21:06:11 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:34:33 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ void	sa(t_stacks *stacks);
 void	sb(t_stacks *stacks);
 void	ra(t_stacks *stacks);
 void	rb(t_stacks *stacks);
+void	rra(t_stacks *stacks);
+void	rrb(t_stacks *stacks);
 
 #endif
