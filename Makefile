@@ -6,7 +6,7 @@
 #    By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 17:19:15 by orhernan          #+#    #+#              #
-#    Updated: 2026/01/11 21:10:14 by orhernan         ###   ########.fr        #
+#    Updated: 2026/01/12 17:36:33 by orhernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,9 +32,9 @@ AR		:= ar rcs
 
 # Source and object files
 SRC		:= $(addprefix $(SRC_DIR)/,	\
-		main_test.c	sort.c		parse.c		\
-		stack.c		push_op.c	swap_op.c	\
-		rotate_op.c)
+		main_test.c	sort.c			parse.c		\
+		stack.c		push_op.c		swap_op.c	\
+		rotate_op.c	reverse_rotate_op.c)
 OBJ 		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # Build Rules
