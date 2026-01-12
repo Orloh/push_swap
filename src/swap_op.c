@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 01:22:09 by orhernan          #+#    #+#             */
-/*   Updated: 2026/01/11 18:20:22 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:56:57 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,13 @@ void	sb(t_stacks *stacks)
 {
 	if (ft_swap(&(stacks->b)))
 		ft_printf("sb\n");
+}
+
+void	ss(t_stacks *stacks)
+{
+	if (!stacks->a || !stacks->b || !stacks->a->next || !stacks->b->next)
+		return;
+	ft_swap(&(stacks->a));
+	ft_swap(&(stacks->b));
+	ft_printf("ss\n");
 }
