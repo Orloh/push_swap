@@ -21,6 +21,7 @@ PRINTF_DIR	:= ft_printf
 
 # Files
 NAME		:= push_swap.out
+TEST_NAME	:= test_push_swap.out
 LIBFT		:= $(LIBFT_DIR)/libft.a
 PRINTF		:= $(PRINTF_DIR)/libftprintf.a
 
@@ -32,9 +33,13 @@ AR		:= ar rcs
 
 # Source and object files
 SRC		:= $(addprefix $(SRC_DIR)/,	\
-		main_test.c	sort.c			parse.c		\
-		stack.c		push_op.c		swap_op.c	\
-		rotate_op.c	reverse_rotate_op.c)
+		sort.c		\
+		parse.c		\
+		stack.c		\
+		push_op.c	\
+		swap_op.c	\
+		rotate_op.c	\
+		reverse_rotate_op.c)
 OBJ 		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # Build Rules
@@ -50,11 +55,17 @@ $(PRINTF):
 
 $(NAME): $(PRINTF) $(OBJ)
 	printf "Creating $(NAME) ...\n"
-	cp $(PRINTF) $(NAME)
-	$(CC) $(CFLAGS) $(OBJ) $(PRINTF) -o $@
+	$(CC) $(CFLAGS) $(SRC_DIR)/main.c $(OBJ) $(PRINTF) -o $@
+
+$(TEST_NAME): $(PRINTF) $(OBJ)
+	printf "Creating $(TEST_NAME)...\n"
+	$(CC) $(CFLAGS) $(SRC_DIR)/main_test.c $(OBJ) $(PRINTF) -o $@
 
 # Targets
 all: $(NAME)
+
+test: $(TEST_NAME)
+	./$<
 
 clean:
 	@printf "Cleaning up object files\n\n"
@@ -64,7 +75,7 @@ clean:
 
 fclean: clean
 	$(MAKE) fclean -C $(PRINTF_DIR) || true
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(TEST_NAME)
 	@printf "Removed $(NAME)\n"
 
 re: fclean all
