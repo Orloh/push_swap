@@ -39,3 +39,12 @@ void	rb(t_stacks *stacks)
 	if (ft_rotate(&(stacks->b)))
 		ft_printf("rb\n");
 }
+
+void	rr(t_stacks *stacks)
+{
+	if (!stacks->a || !stacks->b || !stacks->a->next || !stacks->b->next)
+		return ;
+	ft_rotate(&(stacks->a));
+	ft_rotate(&(stacks->b));
+	ft_printf("rr\n");
+}
