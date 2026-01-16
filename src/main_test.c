@@ -62,20 +62,40 @@ void	print_stack(char *name, t_list *s)
 	printf("NULL\n");
 }
 
+void	assert_test(int condition, char *description)
+{
+	if (condition)
+		printf(GREEN "[PASS] %s\n" RESET, description);
+	else
+		printf(RED "[FAIL] %s\n" RESET, description);
+}
+
+t_list	*create_test_stack(int *values, int size)
+{
+	t_list	*stack = NULL;
+	for (int i=0; i < size; i++)
+		ft_lstadd_back(&stack, ft_lstnew(ft_new_content(values[i], i)));
+	return stack;
+}
+
+void clear_stacks(t_stacks *stacks)
+{
+	if (stacks->a) ft_lstclear(&(stacks->a), free);
+	if (stacks->b) ft_lstclear(&(stacks->b), free);
+}
+
 int	main(void)
 {
 	t_int_arr	res;
 	int	i;
 
+	printf(YELLOW "--- PARSING TESTS  ---\n" RESET);
 	// Test 1
-	printf(YELLOW "--- TEST 1: Multiple Args (1 42 -5) ---\n" RESET);
+	printf(YELLOW "\n--- TEST 1: Multiple Args (1 42 -5) ---\n" RESET);
 	char	*test1[] = {"push_swap", "1", "42", "-5", NULL};
 	res = ft_parse_args(4, test1);
 	print_arr(res);
-	if (res.data != NULL && res.size == 3)
-		printf(GREEN "[PASS] Array created correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] Array creation failed.\n" RESET);
+	assert_test(res.data != NULL && res.size == 3, "Args parsing");
 	ft_free_int_arr(&res);
 
 	// Test2
@@ -83,10 +103,7 @@ int	main(void)
 	char	*test2[] = {"push_swap", "100 200 300 1000", NULL};
 	res = ft_parse_args(2, test2);
 	print_arr(res);
-	if (res.data != NULL && res.size == 4)
-		printf(GREEN "[PASS] Split args parsed correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] Split args parsing failed.\n" RESET);
+	assert_test(res.data != NULL && res.size == 4, "Spliting args parsing");
 	ft_free_int_arr(&res);
 	
 	// Test 3
@@ -94,10 +111,7 @@ int	main(void)
 	char	*test3[] = {"push_swap", "2147483648", NULL};
 	res = ft_parse_args(2, test3);
 	print_arr(res);
-	if (res.data == NULL)
-		printf(GREEN "[PASS] Overflow detected succesfully (NULL).\n" RESET);
-	else
-		printf(RED "[FAIL] Overflow NOT detected (Retrned pointer).\n" RESET);
+	assert_test(res.data == NULL, "Overflow test");
 	ft_free_int_arr(&res);
 
 	// Test 4
@@ -105,12 +119,10 @@ int	main(void)
 	char	*test4[] = {"push_swap", "12", "34a", "56", NULL};
 	res = ft_parse_args(4, test4);
 	print_arr(res);
-	if (res.data == NULL) 
-		printf(GREEN "[PASS] Invalid input detected successfully (NULL).\n" RESET);
-	else
-		printf(RED "[FAIL] Invalid input NOT detected.\n" RESET);
+	assert_test(res.data == NULL, "Invalid input test");
 	ft_free_int_arr(&res);
 
+	printf(YELLOW "\n--- SORTING INT ARRAY TESTS  ---\n" RESET);
 	// Test 5
 	printf(YELLOW "\n--- TEST 5: Random Sort (500 integers) ---\n" RESET);	
 	res.size = 500;
@@ -131,10 +143,7 @@ int	main(void)
 	printf("First 5 unsorted: %d %d %d %d %d\n", res.data[0], res.data[1], res.data[2], res.data[3], res.data[4]);
 	ft_sort_array(&res);
 	printf("First 5 sorted: %d %d %d %d %d\n", res.data[0], res.data[1], res.data[2], res.data[3], res.data[4]);
-	if (ft_is_sorted(&res)) 
-		printf(GREEN "[PASS] Array is sorted.\n" RESET);
-	else
-		printf(RED "[FAIL] Array is NOT sorted.\n" RESET);
+	assert_test(ft_is_sorted(&res), "Random sort test");
 	ft_free_int_arr(&res);
 
 	// Test 6
@@ -151,10 +160,7 @@ int	main(void)
 		res.data[i] = i + 1;
 	ft_sort_array(&res);
 	print_arr(res);
-	if (ft_is_sorted(&res)) 
-		printf(GREEN "[PASS] Array is sorted.\n" RESET);
-	else
-		printf(RED "[FAIL] Array is NOT sorted.\n" RESET);
+	assert_test(ft_is_sorted(&res), "Ordered array test");
 	ft_free_int_arr(&res);
 
 	// Test 7
@@ -171,22 +177,17 @@ int	main(void)
 		res.data[i] = i + 1;
 	ft_sort_array(&res);
 	print_arr(res);
-	if (ft_is_sorted(&res)) 
-		printf(GREEN "[PASS] Array is sorted.\n" RESET);
-	else
-		printf(RED "[FAIL] Array is NOT sorted.\n" RESET);
+	assert_test(ft_is_sorted(&res), "Reversed array test");
 	ft_free_int_arr(&res);
 
+	printf(YELLOW "\n--- STACK INITIALIZATION TESTS---\n" RESET);
 	// Test 8
 	printf(YELLOW "\n--- TEST 8: Stack Init (Scrambled: 42 1 -5 10) ---\n" RESET);
 	char	*test8[] = {"push_swap", "42", "1", "-5", "10", NULL};
 	res = ft_parse_args(5, test8);
 	t_list	*stack_a = ft_init_stack(&res);
 	print_stack("A", stack_a);
-	if (stack_a != NULL && ft_lstsize(stack_a) == 4) 
-		printf(GREEN "[PASS] Stack A initialized.\n" RESET);
-	else
-		printf(RED "[FAIL] Stack A initializaion error.\n" RESET);
+	assert_test(stack_a != NULL && ft_lstsize(stack_a) == 4, "Stack initialization test.");
 	ft_lstclear(&stack_a, free);
 	ft_free_int_arr(&res);
 
@@ -196,23 +197,19 @@ int	main(void)
 	res = ft_parse_args(5, test9);
 	stack_a = ft_init_stack(&res);
 	print_stack("A", stack_a);
-	if (stack_a != NULL && ft_lstsize(stack_a) == 4) 
-		printf(GREEN "[PASS] Stack A initialized with negatives.\n" RESET);
-	else
-		printf(RED "[FAIL] Stack A initializaion error.\n" RESET);
+	assert_test(stack_a != NULL && ft_lstsize(stack_a) == 4, "Stack initialization with negatives test.");
 	ft_lstclear(&stack_a, free);
 	ft_free_int_arr(&res);
 
+
+	printf(YELLOW "\n--- Stack Init (Single Element) ---\n" RESET);
 	// Test 10
 	printf(YELLOW "\n--- TEST 10: Stack Init (Single Element) ---\n" RESET);
 	char	*test10[] = {"push_swap", "42", NULL};
 	res = ft_parse_args(2, test10);
 	stack_a = ft_init_stack(&res);
 	print_stack("A", stack_a);
-	if (stack_a != NULL && ft_lstsize(stack_a) == 1) 
-		printf(GREEN "[PASS] Single element stack initialized.\n" RESET);
-	else
-		printf(RED "[FAIL] Single element stack initializaion error.\n" RESET);
+	assert_test(stack_a != NULL && ft_lstsize(stack_a) == 1, "Single element stack initialization test.");
 	ft_lstclear(&stack_a, free);
 	ft_free_int_arr(&res);
 
@@ -222,18 +219,11 @@ int	main(void)
 	res = ft_parse_args(5, test11);
 	stack_a = ft_init_stack(&res);
 	print_stack("A", stack_a);
-	if (stack_a == NULL)
-	{
-		printf(GREEN "[PASS] NULL (Duplicates detected succesfully)\n" RESET);
-	}
-	else
-	{
-		printf(RED "[FAIL] Stack initialized despite duplicates!\n" RESET);
-		ft_lstclear(&stack_a, free);
-	}
+	assert_test(stack_a == NULL, "Stack initialization with duplicates test.");
+	if (stack_a) ft_lstclear(&stack_a, free);
 	ft_free_int_arr(&res);
 
-	printf(YELLOW "\n--- OPERATION TESTING ---\n" RESET);	
+	printf(YELLOW "\n--- OPERATION TESTS ---\n" RESET);	
 	t_stacks	*stacks = malloc(sizeof(t_stacks));
 	if (!stacks)
 	{
@@ -246,8 +236,11 @@ int	main(void)
 
 	// Test 12
 	printf(YELLOW "\n--- TEST 12: Unit Test Push (pa/pb)  ---\n" RESET);
-	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(10, 0)));
-	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(20, 1)));
+	int vals_a1[] = {10};
+	int vals_b1[] = {20};
+
+	stacks->a = create_test_stack(vals_a1, 1);
+	stacks->b = create_test_stack(vals_b1, 1);
 	
 	printf("Initial State:\n");
 	print_stack("A", stacks->a);
@@ -258,20 +251,14 @@ int	main(void)
 	pb(stacks);
 	print_stack("A", stacks->a);
 	print_stack("B", stacks->b);
-	if (ft_lstsize(stacks->a) == 0 && ft_lstsize(stacks->b) == 2)
-		printf(GREEN "[PASS] pb executed correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] pb execution failed (Stack size mismatch).\n" RESET);
+	assert_test(ft_lstsize(stacks->a) == 0 && ft_lstsize(stacks->b) == 2, "Push B test");
 
 	// Test pa: B -> A
 	printf("\nAction: pa\n");
 	pa(stacks);
 	print_stack("A", stacks->a);
 	print_stack("B", stacks->b);
-	if (ft_lstsize(stacks->a) == 1 && ft_lstsize(stacks->b) == 1)
-		printf(GREEN "[PASS] pa executed correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] pa execution failed (Stack size mismatch).\n" RESET);
+	assert_test(ft_lstsize(stacks->a) == 1 && ft_lstsize(stacks->b) == 1, "Push A test");
 
 	// Test Edge case: pa on empty stack
 	printf("\nAction: pa on empty B stack (Should do nothing)\n");
@@ -279,23 +266,17 @@ int	main(void)
 	pa(stacks);
 	print_stack("A", stacks->a);
 	print_stack("B", stacks->b);
-	if (ft_lstsize(stacks->a) == 2 && ft_lstsize(stacks->b) == 0)
-		printf(GREEN "[PASS] pa on empty stack ignored correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] pa modified an empty stack.\n" RESET);
+	assert_test(ft_lstsize(stacks->a) == 2 && ft_lstsize(stacks->b) == 0, "Push A on empty stac test");
 
-	ft_lstclear(&(stacks->a), free);
-	ft_lstclear(&(stacks->b), free);
+	clear_stacks(stacks);
 
 	// Test 13
 	printf(YELLOW "\n--- TEST 13: Unit Test Swap (sa/sb/ss)  ---\n" RESET);
-	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(10, 0)));
-	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(20, 1)));
-	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(30, 2)));
-	
-	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(40, 0)));
-	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(50, 1)));
-	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(60, 2)));
+	int vals_a[] = {10, 20, 30};
+	int vals_b[] = {40, 50 ,60};
+
+	stacks->a = create_test_stack(vals_a, 3);
+	stacks->b = create_test_stack(vals_b, 3);
 	
 	printf("Initial State:\n");
 	print_stack("A", stacks->a);
@@ -305,89 +286,62 @@ int	main(void)
 	printf("\nAction: sa\n");
 	sa(stacks);
 	print_stack("A", stacks->a);
-	if (ft_lstsize(stacks->a) == 3 && ((t_node_content *)stacks->a->content)->rank == 1)
-		printf(GREEN "[PASS] sa executed correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] sa execution failed (Stack didn't change).\n" RESET);
+	assert_test(ft_lstsize(stacks->a) == 3 && ((t_node_content *)stacks->a->content)->rank == 1, "Swap A");
 
 	// Test sa: B[0] <-> B[1]
 	printf("\nAction: sb\n");
 	sb(stacks);
 	print_stack("B", stacks->b);
-	if (ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->b->content)->rank == 1)
-		printf(GREEN "[PASS] sb executed correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] sb execution failed (Stack didn't change).\n" RESET);
+	assert_test(ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->b->content)->rank == 1, "Swap B");
 
 	// Test ss: AB[1] <-> AB[0]
 	printf("\nAction: ss\n");
 	ss(stacks);
 	print_stack("A", stacks->a);
 	print_stack("B", stacks->b);
-	if (ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->b->content)->rank == 0)
-		printf(GREEN "[PASS] ss executed correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] ss execution failed (Stack didn't change).\n" RESET);
+	assert_test(ft_lstsize(stacks->a) == 3 && ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->a->content)->rank == 0 && ((t_node_content *)stacks->b->content)->rank == 0, "Swap Both");
 	
-	ft_lstclear(&(stacks->a), free);
-	ft_lstclear(&(stacks->b), free);
+	clear_stacks(stacks);
 
 	// Test 14
-	
 	// Test on sa on Emtpy Stack
 	printf(YELLOW "\n--- TEST 14: Edge Cases Swap(sa/sb)  ---\n" RESET);
-	ft_lstclear(&(stacks->a), free);
 	printf("Initial State:\n");
 	print_stack("A", stacks->a);
 	printf("\nAction: sa on EMPTY stack\n");
 	sa(stacks);
-	if (stacks->a == NULL)
-		printf(GREEN "[PASS] sa on empty stack handled safely.\n" RESET);
-	else
-		printf(RED "[FAIL] sa changed empty stack (pointer not NULL).\n" RESET);
+	print_stack("A", stacks->a);
+	assert_test(stacks->a == NULL, "sa on empty stack");
 
 	// Test on sa on Stack size 1
-	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(10, 0)));
+	stacks->a = create_test_stack(vals_a1, 1);
 	printf("\nAction: sa on SIZE 1 stack (Rank 0)\n");
 	sa(stacks);
-	if (ft_lstsize(stacks->a) == 1 && ((t_node_content *)stacks->a->content)->rank == 0)
-		printf(GREEN "[PASS] sa on size 1 stack handled safely.\n" RESET);
-	else
-		printf(RED "[FAIL] sa modified stack of size 1.\n" RESET);
+	print_stack("A", stacks->a);
+	assert_test(ft_lstsize(stacks->a) == 1 && ((t_node_content *)stacks->a->content)->rank == 0, "sa on SIZE 1 stack");
 	
 	// Test on sb on Emtpy Stack
-	ft_lstclear(&(stacks->b), free);
 	printf("Initial State:\n");
 	print_stack("B", stacks->b);
 	printf("\nAction: sb on EMPTY stack\n");
 	sb(stacks);
-	if (stacks->b == NULL)
-		printf(GREEN "[PASS] sb on empty stack handled safely.\n" RESET);
-	else
-		printf(RED "[FAIL] sb changed empty stack (pointer not NULL).\n" RESET);
+	print_stack("B", stacks->b);
+	assert_test(stacks->b == NULL, "sb on empty stack");
 
 	// Test on sb on Stack size 1
-	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(20, 0)));
+	stacks->b = create_test_stack(vals_b1, 1);
 	printf("\nAction: sb on SIZE 1 stack (Rank 0)\n");
 	sb(stacks);
-	if (ft_lstsize(stacks->b) == 1 && ((t_node_content *)stacks->b->content)->rank == 0)
-		printf(GREEN "[PASS] sb on size 1 stack handled safely.\n" RESET);
-	else
-		printf(RED "[FAIL] sb modified stack of size 1.\n" RESET);
-	
-	ft_lstclear(&(stacks->a), free);
-	ft_lstclear(&(stacks->b), free);
+	print_stack("B", stacks->b);
+	assert_test(ft_lstsize(stacks->b) == 1 && ((t_node_content *)stacks->b->content)->rank == 0, "sb on SIZE 1 stack");
 
-	// Test 14
-	printf(YELLOW "\n--- TEST 15: Unit Test rotate (ra/rb)  ---\n" RESET);
-	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(10, 0)));
-	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(20, 1)));
-	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(30, 2)));
-	
-	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(40, 0)));
-	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(50, 1)));
-	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(60, 2)));
-	
+	clear_stacks(stacks);
+
+	// Test 15
+	printf(YELLOW "\n--- TEST 15: Unit Test rotate (ra/rb/rr)  ---\n" RESET);
+	stacks->a = create_test_stack(vals_a, 3);
+	stacks->b = create_test_stack(vals_b, 3);
+
 	printf("Initial State:\n");
 	print_stack("A", stacks->a);
 	print_stack("B", stacks->b);
@@ -396,55 +350,44 @@ int	main(void)
 	printf("\nAction: ra\n");
 	ra(stacks);
 	print_stack("A", stacks->a);
-	if (ft_lstsize(stacks->a) == 3 && ((t_node_content *)stacks->a->content)->rank == 1)
-		printf(GREEN "[PASS] ra executed correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] ra execution failed (Stack didn't change).\n" RESET);
+	assert_test(ft_lstsize(stacks->a) == 3 && ((t_node_content *)stacks->a->content)->rank == 1, "Rotate A");
 
 	// Test rb
 	printf("\nAction: rb\n");
 	rb(stacks);
 	print_stack("B", stacks->b);
-	if (ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->b->content)->rank == 1)
-		printf(GREEN "[PASS] rb executed correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] rb execution failed (Stack didn't change).\n" RESET);
+	assert_test(ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->b->content)->rank == 1, "Rotate B");
 
-	ft_lstclear(&(stacks->a), free);
-	ft_lstclear(&(stacks->b), free);
-	
+	// Test rrr
+	printf("\nAction: rrr\n");
+	rr(stacks);
+	print_stack("A", stacks->a);
+	print_stack("B", stacks->b);
+	assert_test(ft_lstsize(stacks->a) == 3 && ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->a->content)->rank == 2 && ((t_node_content *)stacks->b->content)->rank == 2, "Rotate Both");
+
+	clear_stacks(stacks);
+
+	//Test 16
 	printf(YELLOW "\n--- TEST 16: Unit Test reverse rotate (rra/rrb)  ---\n" RESET);
-	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(10, 0)));
-	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(20, 1)));
-	ft_lstadd_back(&(stacks->a), ft_lstnew(ft_new_content(30, 2)));
-	
-	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(40, 0)));
-	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(50, 1)));
-	ft_lstadd_back(&(stacks->b), ft_lstnew(ft_new_content(60, 2)));
+	stacks->a = create_test_stack(vals_a, 3);
+	stacks->b = create_test_stack(vals_b, 3);
 	
 	printf("Initial State:\n");
 	print_stack("A", stacks->a);
 	print_stack("B", stacks->b);
 
-	// Test ra
+	// Test rra
 	printf("\nAction: rra\n");
 	rra(stacks);
 	print_stack("A", stacks->a);
-	if (ft_lstsize(stacks->a) == 3 && ((t_node_content *)stacks->a->content)->rank == 2)
-		printf(GREEN "[PASS] rra executed correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] sa execution failed (Stack didn't change).\n" RESET);
+	assert_test(ft_lstsize(stacks->a) == 3 && ((t_node_content *)stacks->a->content)->rank == 2, "Reverse Rotate A");
 
-	// Test rb
+	// Test rrb
 	printf("\nAction: rrb\n");
 	rrb(stacks);
 	print_stack("B", stacks->b);
-	if (ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->b->content)->rank == 2)
-		printf(GREEN "[PASS] rrb executed correctly.\n" RESET);
-	else
-		printf(RED "[FAIL] sb execution failed (Stack didn't change).\n" RESET);
+	assert_test(ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->b->content)->rank == 2, "Reverse Rotate B");
 
-	ft_lstclear(&(stacks->a), free);
-	ft_lstclear(&(stacks->b), free);
+	clear_stacks(stacks);
 	return (0);
 }
