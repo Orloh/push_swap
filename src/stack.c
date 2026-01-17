@@ -25,7 +25,7 @@ int	ft_get_rank(int val, t_int_arr *sorted_arr)
 	if (!sorted_arr || !sorted_arr->data)
 		return (-1);
 	low = 0;
-	high = (sorted_arr->size)- 1;
+	high = (sorted_arr->size) - 1;
 	while (low <= high)
 	{
 		mid = low + (high - low) / 2;
@@ -45,6 +45,7 @@ int	ft_get_rank(int val, t_int_arr *sorted_arr)
 t_node_content	*ft_create_content(int val, t_int_arr *sorted_arr)
 {
 	t_node_content	*c;
+
 	c = malloc(sizeof(t_node_content));
 	if (!c)
 		return (NULL);
@@ -53,42 +54,46 @@ t_node_content	*ft_create_content(int val, t_int_arr *sorted_arr)
 	return (c);
 }
 
+t_int_arr	ft_get_sorted_arr(t_int_arr *arr)
+{
+	t_int_arr	sorted;
+
+	sorted.size = arr->size;
+	sorted.data = ft_calloc(arr->size, sizeof(int));
+	if (!sorted.data)
+		return (sorted);
+	ft_memcpy(sorted.data, arr->data, arr->size * sizeof(int));
+	ft_sort_array(&sorted);
+	return (sorted);
+}
+
 /*
  * Initializes a stack from a parsed integer array.
  * If any allocation fails, it clears the list and returns NULL.
  */
 t_list	*ft_init_stack(t_int_arr *arr)
 {
-	t_list	*new_stack;
-	t_list	*new_node;
-	t_node_content	*new_content;
-	t_int_arr	sorted_copy;
-	int		i;
+	int			i;
+	t_list		*new_stack;
+	t_list		*new_node;
+	t_int_arr	sorted;
 
 	if (!arr || !arr->data)
 		return (NULL);
-	sorted_copy.size = arr->size;
-	sorted_copy.data = ft_calloc(arr->size, sizeof(int));
-	if (!sorted_copy.data)
-		return (NULL);
-	ft_memcpy(sorted_copy.data, arr->data, arr->size * sizeof(int));
-	ft_sort_array(&sorted_copy);
-	if (!ft_is_sorted(&sorted_copy))
+	sorted = ft_get_sorted_arr(arr);
+	if (!sorted.data)
 		return (NULL);
 	new_stack = NULL;
 	i = -1;
 	while (++i < arr->size)
 	{
-		new_content = ft_create_content(arr->data[i], &sorted_copy);
-		new_node = ft_lstnew(new_content);
-		if (!new_content || !new_node)
+		new_node = ft_lstnew(ft_create_content(arr->data[i], &sorted));
+		if (!new_node)
 		{
-			free(new_content);
 			ft_lstclear(&new_stack, free);
-			break;
+			break ;
 		}
 		ft_lstadd_back(&new_stack, new_node);
 	}
-	ft_free_int_arr(&sorted_copy);
-	return (new_stack);
+	return (ft_free_int_arr(&sorted), new_stack);
 }
