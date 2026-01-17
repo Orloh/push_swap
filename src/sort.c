@@ -22,7 +22,7 @@ int	ft_is_sorted(t_int_arr *arr)
 	i = -1;
 	if (!arr || !arr->data)
 		return (0);
-	while(++i < arr->size - 1)
+	while (++i < arr->size - 1)
 	{
 		if (!(arr->data[i] < arr->data[i + 1]))
 			return (0);

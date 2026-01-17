@@ -26,12 +26,12 @@ static int	ft_push(t_list **src, t_list **dst)
 
 void	pa(t_stacks *stacks)
 {
-	if(ft_push(&(stacks->b), &(stacks->a)))
+	if (ft_push(&(stacks->b), &(stacks->a)))
 		ft_printf("pa\n");
 }
 
 void	pb(t_stacks *stacks)
 {
-	if(ft_push(&(stacks->a), &(stacks->b)))
+	if (ft_push(&(stacks->a), &(stacks->b)))
 		ft_printf("pb\n");
 }

@@ -42,7 +42,7 @@ void	sb(t_stacks *stacks)
 void	ss(t_stacks *stacks)
 {
 	if (!stacks->a || !stacks->b || !stacks->a->next || !stacks->b->next)
-		return;
+		return ;
 	ft_swap(&(stacks->a));
 	ft_swap(&(stacks->b));
 	ft_printf("ss\n");
