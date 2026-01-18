@@ -358,8 +358,8 @@ int	main(void)
 	print_stack("B", stacks->b);
 	assert_test(ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->b->content)->rank == 1, "Rotate B");
 
-	// Test rrr
-	printf("\nAction: rrr\n");
+	// Test rr
+	printf("\nAction: rr\n");
 	rr(stacks);
 	print_stack("A", stacks->a);
 	print_stack("B", stacks->b);
@@ -387,6 +387,13 @@ int	main(void)
 	rrb(stacks);
 	print_stack("B", stacks->b);
 	assert_test(ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->b->content)->rank == 2, "Reverse Rotate B");
+
+	// Test rrr
+	printf("\nAction: rrr\n");
+	rrr(stacks);
+	print_stack("A", stacks->a);
+	print_stack("B", stacks->b);
+	assert_test(ft_lstsize(stacks->a) == 3 && ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->a->content)->rank == 1 && ((t_node_content *)stacks->b->content)->rank == 1, "Reverse Rotate Both");
 
 	clear_stacks(stacks);
 	return (0);
