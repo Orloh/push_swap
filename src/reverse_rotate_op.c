@@ -41,7 +41,7 @@ void	rra(t_stacks *stacks)
 void	rrb(t_stacks *stacks)
 {
 	if (ft_reverse_rotate(&(stacks->b)))
-		ft_printf("rrb\n ");
+		ft_printf("rrb\n");
 }
 
 void	rrr(t_stacks *stacks)
@@ -50,5 +50,5 @@ void	rrr(t_stacks *stacks)
 		return ;
 	ft_reverse_rotate(&(stacks->a));
 	ft_reverse_rotate(&(stacks->b));
-	ft_printf("rrr\n ");
+	ft_printf("rrr\n");
 }

@@ -31,6 +31,28 @@ int	ft_is_sorted(t_int_arr *arr)
 }
 
 /*
+ * Checks if the stack is sorted in strictly ascending order by comparing
+ * node ranks.
+ */
+int	ft_is_sorted_stack(t_list *stack)
+{
+	t_node_content	*current;
+	t_node_content	*next;
+
+	if (!stack || !stack->next)
+		return (1);
+	while (stack->next)
+	{
+		current = (t_node_content *)stack->content;
+		next = (t_node_content *)stack->next->content;
+		if (current->rank >= next->rank)
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
+}
+
+/*
  * Sorts an array of integers in place and returns a pointer
  */
 void	ft_sort_array(t_int_arr *arr)
@@ -55,4 +77,39 @@ void	ft_sort_array(t_int_arr *arr)
 		i++;
 	}
 	return ;
+}
+
+/*
+ * Sorts a stack of exactly three elements using a maximum of two moves.
+ * It compares the ranks of the three nodes to identify one of the five
+ * possible unsorted permutations and applies the optimal sequence of sa,
+ * ra, or rra to achive ascending order.
+*/
+void	ft_tiny_sort(t_stacks *stacks)
+{
+	int	a;
+	int	b;
+	int	c;
+
+	if (ft_is_sorted_stack(stacks->a))
+		return ;
+	a = ((t_node_content *)stacks->a->content)->rank;
+	b = ((t_node_content *)stacks->a->next->content)->rank;
+	c = ((t_node_content *)stacks->a->next->next->content)->rank;
+	if (a < b && b > c && a < c)
+	{
+		sa(stacks);
+		ra(stacks);
+	}
+	else if (a > b && b < c && a < c)
+		sa(stacks);
+	else if (a < b && b > c && a > c)
+		rra(stacks);
+	else if (a > b && b < c && a > c)
+		ra(stacks);
+	else if (a > b && b > c)
+	{
+		sa(stacks);
+		rra(stacks);
+	}
 }
