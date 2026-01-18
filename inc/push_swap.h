@@ -52,5 +52,6 @@ void	rb(t_stacks *stacks);
 void	rr(t_stacks *stacks);
 void	rra(t_stacks *stacks);
 void	rrb(t_stacks *stacks);
+void	rrr(t_stacks *stacks);
 
 #endif
