@@ -57,9 +57,9 @@ $(NAME): $(PRINTF) $(OBJ)
 	printf "Creating $(NAME) ...\n"
 	$(CC) $(CFLAGS) $(SRC_DIR)/main.c $(OBJ) $(PRINTF) -o $@
 
-$(TEST_NAME): $(PRINTF) $(OBJ)
+$(TEST_NAME): $(SRC_DIR)/main_test.c $(PRINTF) $(OBJ)
 	printf "Creating $(TEST_NAME)...\n"
-	$(CC) $(CFLAGS) $(SRC_DIR)/main_test.c $(OBJ) $(PRINTF) -o $@
+	$(CC) $(CFLAGS) $< $(OBJ) $(PRINTF) -o $@
 
 # Targets
 all: $(NAME)
