@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 20:58:05 by orhernan          #+#    #+#             */
-/*   Updated: 2026/01/12 18:34:02 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/01/19 18:43:26 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -457,5 +457,24 @@ int	main(void)
 	assert_test(ft_is_sorted_stack(stacks->a), "Tiny Sort Case 2 1 0");
 	clear_stacks(stacks);
 
+	//Test 18
+	printf(YELLOW "\n--- TEST 18: Unit Test Small Sort (4 - 5 elements)  ---\n" RESET);
+	// Case: 4 elements random order
+	printf(YELLOW "\nCase: 4 unsorted elements\n" RESET);
+	int ss1[] = {40, 10, 30, 20};
+	stacks->a = create_test_stack(ss1, 4);
+	print_stack("A", stacks->a);
+	ft_small_sort(stacks);
+	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->b) == 0, "Small Sort: 4 elements");
+	clear_stacks(stacks);
+
+	// Case: 5 elements random order
+	printf(YELLOW "\nCase: 5 unsorted elements\n" RESET);
+	int ss2[] = {40, 10, 30, 50, 20};
+	stacks->a = create_test_stack(ss2, 5);
+	print_stack("A", stacks->a);
+	ft_small_sort(stacks);
+	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->b) == 0, "Small Sort: 4 elements");
+	clear_stacks(stacks);
 	return (0);
 }
