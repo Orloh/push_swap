@@ -395,6 +395,67 @@ int	main(void)
 	print_stack("B", stacks->b);
 	assert_test(ft_lstsize(stacks->a) == 3 && ft_lstsize(stacks->b) == 3 && ((t_node_content *)stacks->a->content)->rank == 1 && ((t_node_content *)stacks->b->content)->rank == 1, "Reverse Rotate Both");
 
+	//Test 17
+	printf(YELLOW "\n--- TEST 17: Unit Test Tinny Sort (All Permutations)  ---\n" RESET);
+	//Case 0: 0 1 2
+	printf(YELLOW "\nCase: 0 1 2\n" RESET);
+	int p1[] = {10, 20, 30};
+	stacks->a =create_test_stack(p1, 3);
+	print_stack("A", stacks->a);
+	ft_tiny_sort(stacks);
+	print_stack("A", stacks->a);
+	assert_test(ft_is_sorted_stack(stacks->a), "Tiny Sort Case 0 1 2");
 	clear_stacks(stacks);
+
+	//Case: 0 2 1
+	printf(YELLOW "\nCase: 0 2 1\n" RESET);
+	int p2[] = {10, 30, 20};
+	stacks->a =create_test_stack(p2, 3);
+	print_stack("A", stacks->a);
+	ft_tiny_sort(stacks);
+	print_stack("A", stacks->a);
+	assert_test(ft_is_sorted_stack(stacks->a), "Tiny Sort Case 0 2 1");
+	clear_stacks(stacks);
+	
+	//Case: 1 0 2
+	printf(YELLOW "\nCase: 1 0 2\n" RESET);
+	int p3[] = {20, 10, 30};
+	stacks->a =create_test_stack(p3, 3);
+	print_stack("A", stacks->a);
+	ft_tiny_sort(stacks);
+	print_stack("A", stacks->a);
+	assert_test(ft_is_sorted_stack(stacks->a), "Tiny Sort Case 1 0 2");
+	clear_stacks(stacks);
+	
+	//Case: 1 2 0
+	printf(YELLOW "\nCase: 1 2 0\n" RESET);
+	int p4[] = {20, 30, 10};
+	stacks->a =create_test_stack(p4, 3);
+	print_stack("A", stacks->a);
+	ft_tiny_sort(stacks);
+	print_stack("A", stacks->a);
+	assert_test(ft_is_sorted_stack(stacks->a), "Tiny Sort Case 1 2 0");
+	clear_stacks(stacks);
+	
+	//Case: 2 0 1
+	printf(YELLOW "\nCase: 2 0 1\n" RESET);
+	int p5[] = {30, 10, 20};
+	stacks->a =create_test_stack(p5, 3);
+	print_stack("A", stacks->a);
+	ft_tiny_sort(stacks);
+	print_stack("A", stacks->a);
+	assert_test(ft_is_sorted_stack(stacks->a), "Tiny Sort Case 2 0 1");
+	clear_stacks(stacks);
+	
+	//Case: 2 1 0
+	printf(YELLOW "\nCase: 2 1 0\n" RESET);
+	int p6[] = {30, 10, 20};
+	stacks->a =create_test_stack(p6, 3);
+	print_stack("A", stacks->a);
+	ft_tiny_sort(stacks);
+	print_stack("A", stacks->a);
+	assert_test(ft_is_sorted_stack(stacks->a), "Tiny Sort Case 2 1 0");
+	clear_stacks(stacks);
+
 	return (0);
 }

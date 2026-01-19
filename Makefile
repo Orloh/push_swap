@@ -6,7 +6,7 @@
 #    By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 17:19:15 by orhernan          #+#    #+#              #
-#    Updated: 2026/01/12 17:36:33 by orhernan         ###   ########.fr        #
+#    Updated: 2026/01/19 18:30:40 by orhernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC		:= $(addprefix $(SRC_DIR)/,	\
 		push_op.c	\
 		swap_op.c	\
 		rotate_op.c	\
+		sort_stub.c	\
 		reverse_rotate_op.c)
 OBJ 		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
