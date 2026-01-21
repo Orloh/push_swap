@@ -511,5 +511,27 @@ int	main(void)
 	print_stack("A", stacks->a);
 	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->b) == 0, "Small Sort: 5 ordered elements");
 	clear_stacks(stacks);
+	
+	// Test 19
+	printf(YELLOW "\n--- TEST 19: Big Sort ( 100 & 500 elements) ---\n" RESET);
+
+	// Case: 100 elements
+	printf(YELLOW "\nCase: 100 random elements\n" RESET);
+	int size100 = 100;
+	int *arr100 = malloc(sizeof(int) * size100);
+	for (int i = 0; i < size100; i++) arr100[i] = i;
+	for (int i = 0; i < size100; i++) 
+	{
+		int target = rand() % size100;
+		int tmp = arr100[i];
+		arr100[i] = arr100[target];
+		arr100[target] = tmp;
+	}
+	stacks->a = create_test_stack(arr100, size100);
+	ft_big_sort(stacks);
+	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->a) == size100, "Big Sort: 100 elements");
+	clear_stacks(stacks);
+	free(arr100);
+
 	return (0);
 }
