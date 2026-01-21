@@ -54,6 +54,7 @@ void		rrb(t_stacks *stacks);
 void		rrr(t_stacks *stacks);
 void		ft_tiny_sort(t_stacks *stacks);
 void		ft_small_sort(t_stacks *stacks);
+void		ft_big_sort(t_stacks *stacks);
 int			ft_is_sorted_stack(t_list *stack);
 int			ft_is_sorted(t_int_arr *arr);
 
