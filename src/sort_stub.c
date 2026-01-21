@@ -12,10 +12,30 @@
 
 #include "push_swap.h"
 
+static int	ft_get_min_idx(t_list *stack)
+{
+	(void) stack;
+	return (0);
+}
+
 static void	ft_push_min(t_stacks *stacks)
 {
-	(void) stacks;
-	return ;
+	int	min_idx;
+	int	size;
+
+	size = ft_lstsize(stacks->a);
+	min_idx = ft_get_min_idx(stacks->a);
+	if (min_idx <= size/2)
+	{
+		while (min_idx-- > 0)
+			ra(stacks);
+	}
+	else
+	{
+		while (min_idx++ < size)
+			rra(stacks);
+	}
+	pb(stacks);
 }
 
 void	ft_small_sort(t_stacks *stacks)
