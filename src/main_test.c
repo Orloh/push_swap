@@ -468,7 +468,18 @@ int	main(void)
 	stacks->a = create_test_stack(ss1, 4);
 	print_stack("A", stacks->a);
 	ft_small_sort(stacks);
-	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->b) == 0, "Small Sort: 4 elements");
+	print_stack("A", stacks->a);
+	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->b) == 0, "Small Sort: 4 unsorted elements");
+	clear_stacks(stacks);
+
+	// Case: 4 elements reverse sorted
+	printf(YELLOW "\nCase: 4 reverse sorted elements\n" RESET);
+	int rs1[] = {40, 30, 20, 10};
+	stacks->a = create_test_stack(rs1, 4);
+	print_stack("A", stacks->a);
+	ft_small_sort(stacks);
+	print_stack("A", stacks->a);
+	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->b) == 0, "Small Sort: 4 reverse sorted elements");
 	clear_stacks(stacks);
 
 	// Case: 5 elements random order
@@ -477,7 +488,28 @@ int	main(void)
 	stacks->a = create_test_stack(ss2, 5);
 	print_stack("A", stacks->a);
 	ft_small_sort(stacks);
-	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->b) == 0, "Small Sort: 4 elements");
+	print_stack("A", stacks->a);
+	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->b) == 0, "Small Sort: 5 elements");
+	clear_stacks(stacks);
+
+	// Case: 5 elements reverse order
+	printf(YELLOW "\nCase: 5 unsorted elements\n" RESET);
+	int rs2[] = {50, 40, 30, 20, 10};
+	stacks->a = create_test_stack(rs2, 5);
+	print_stack("A", stacks->a);
+	ft_small_sort(stacks);
+	print_stack("A", stacks->a);
+	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->b) == 0, "Small Sort: 5 reverse ordered elements");
+	clear_stacks(stacks);
+
+	// Case: 5 elements order
+	printf(YELLOW "\nCase: 5 sorted elements\n" RESET);
+	int s1[] = {10, 20, 30, 40, 50};
+	stacks->a = create_test_stack(s1, 5);
+	print_stack("A", stacks->a);
+	ft_small_sort(stacks);
+	print_stack("A", stacks->a);
+	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->b) == 0, "Small Sort: 5 ordered elements");
 	clear_stacks(stacks);
 	return (0);
 }
