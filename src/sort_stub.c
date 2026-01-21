@@ -12,16 +12,26 @@
 
 #include "push_swap.h"
 
-void	ft_tiny_sort(t_stacks *stacks)
+static void	ft_push_min(t_stacks *stacks)
 {
-	(void)stacks;
+	(void) stacks;
 	return ;
 }
 
 void	ft_small_sort(t_stacks *stacks)
 {
-	(void)stacks;
-	return ;
+	int	size;
+
+	if (ft_is_sorted_stack(stacks->a))
+		return ;
+	size = ft_lstsize(stacks->a);
+	if (size == 5)
+		ft_push_min(stacks);
+	if (size >= 4)
+		ft_push_min(stacks);
+	ft_tiny_sort(stacks);
+	while (stacks->b)
+		pa (stacks);
 }
 
 void	ft_big_sort(t_stacks *stacks)
@@ -30,8 +40,5 @@ void	ft_big_sort(t_stacks *stacks)
 	return ;
 
 }
-int	ft_is_sorted_stack(t_list *stack)
-{
-	(void)stack;
-	return (0);
-}
+
+
