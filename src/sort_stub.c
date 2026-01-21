@@ -11,11 +11,29 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <limits.h>
 
 static int	ft_get_min_idx(t_list *stack)
 {
-	(void) stack;
-	return (0);
+	int	min_rank;
+	int	min_idx;
+	int	curr_idx;
+
+	min_rank = INT_MAX;
+	min_idx = 0;
+	curr_idx = 0;
+	while (stack)
+	{
+		if (((t_node_content *)stack->content)->rank < min_rank)
+		{
+			min_rank = ((t_node_content *)stack->content)->rank;
+			min_idx = curr_idx;
+		}
+		stack = stack->next;
+		curr_idx++;
+	}
+
+	return (min_idx);
 }
 
 static void	ft_push_min(t_stacks *stacks)
