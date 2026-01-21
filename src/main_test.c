@@ -72,10 +72,13 @@ void	assert_test(int condition, char *description)
 
 t_list	*create_test_stack(int *values, int size)
 {
-	t_list	*stack = NULL;
-	for (int i=0; i < size; i++)
-		ft_lstadd_back(&stack, ft_lstnew(ft_new_content(values[i], i)));
-	return stack;
+	t_int_arr	tmp;
+	t_list	*stack;
+
+	tmp.data = values;
+	tmp.size = size;
+	stack = ft_init_stack(&tmp);
+	return (stack);
 }
 
 void clear_stacks(t_stacks *stacks)
