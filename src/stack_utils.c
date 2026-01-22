@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.c                                            :+:      :+:    :+:   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 00:21:05 by orhernan          #+#    #+#             */
-/*   Updated: 2026/01/04 00:28:17 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/01/22 17:56:20 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ t_node_content	*ft_create_content(int val, t_int_arr *sorted_arr)
 	return (c);
 }
 
+/*
+ * Creates a sorted copy of thee input array to serve as a rank reference.
+ * Uses ft_memcpy to duplicate data and ft_sort_array to sort it in place.
+ */
 t_int_arr	ft_get_sorted_arr(t_int_arr *arr)
 {
 	t_int_arr	sorted;

@@ -33,13 +33,13 @@ AR		:= ar rcs
 
 # Source and object files
 SRC		:= $(addprefix $(SRC_DIR)/,	\
-		sort.c		\
-		parse.c		\
-		stack.c		\
+		sort_small.c	\
+		sort_big.c	\
+		parse_utils.c	\
+		stack_utils.c	\
 		push_op.c	\
 		swap_op.c	\
 		rotate_op.c	\
-		sort_stub.c	\
 		reverse_rotate_op.c)
 OBJ 		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 

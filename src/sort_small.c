@@ -1,17 +1,74 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_stub.c                                        :+:      :+:    :+:   */
+/*   sort_small.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/19 18:27:19 by orhernan          #+#    #+#             */
-/*   Updated: 2026/01/19 18:46:02 by orhernan         ###   ########.fr       */
+/*   Created: 2025/12/27 14:13:21 by orhernan          #+#    #+#             */
+/*   Updated: 2025/12/28 22:43:56 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <limits.h>
+
+/*
+ * Checks if the stack is sorted in strictly ascending order by comparing
+ * node ranks.
+ */
+int	ft_is_sorted_stack(t_list *stack)
+{
+	t_node_content	*current;
+	t_node_content	*next;
+
+	if (!stack || !stack->next)
+		return (1);
+	while (stack->next)
+	{
+		current = (t_node_content *)stack->content;
+		next = (t_node_content *)stack->next->content;
+		if (current->rank >= next->rank)
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
+}
+
+
+/*
+ * Sorts a stack of exactly three elements using a maximum of two moves.
+ * It compares the ranks of the three nodes to identify one of the five
+ * possible unsorted permutations and applies the optimal sequence of sa,
+ * ra, or rra to achive ascending order.
+*/
+void	ft_tiny_sort(t_stacks *stacks)
+{
+	int	a;
+	int	b;
+	int	c;
+
+	if (ft_is_sorted_stack(stacks->a))
+		return ;
+	a = ((t_node_content *)stacks->a->content)->rank;
+	b = ((t_node_content *)stacks->a->next->content)->rank;
+	c = ((t_node_content *)stacks->a->next->next->content)->rank;
+	if (a < b && b > c && a < c)
+	{
+		sa(stacks);
+		ra(stacks);
+	}
+	else if (a > b && b < c && a < c)
+		sa(stacks);
+	else if (a < b && b > c && a > c)
+		rra(stacks);
+	else if (a > b && b < c && a > c)
+		ra(stacks);
+	else if (a > b && b > c)
+	{
+		sa(stacks);
+		rra(stacks);
+	}
+}
 
 static int	ft_get_min_idx(t_list *stack)
 {
@@ -32,7 +89,6 @@ static int	ft_get_min_idx(t_list *stack)
 		stack = stack->next;
 		curr_idx++;
 	}
-
 	return (min_idx);
 }
 
@@ -43,7 +99,7 @@ static void	ft_push_min(t_stacks *stacks)
 
 	size = ft_lstsize(stacks->a);
 	min_idx = ft_get_min_idx(stacks->a);
-	if (min_idx <= size/2)
+	if (min_idx <= size / 2)
 	{
 		while (min_idx-- > 0)
 			ra(stacks);
@@ -70,51 +126,4 @@ void	ft_small_sort(t_stacks *stacks)
 	ft_tiny_sort(stacks);
 	while (stacks->b)
 		pa (stacks);
-}
-
-int	ft_get_max_bits(t_list *stack)
-{
-	int	max_rank;
-	int	max_bits;
-
-	max_rank = 0;
-	while (stack)
-	{
-		if(((t_node_content *)stack->content)->rank > max_rank)
-			max_rank = ((t_node_content *)stack->content)->rank;
-		stack = stack->next;
-	}
-	max_bits = 0;
-	while ((max_rank >> max_bits) != 0)
-		max_bits++;
-	return (max_bits);
-}
-
-void	ft_big_sort(t_stacks *stacks)
-{
-	int	i;
-	int	j;
-	int	size;
-	int	max_bits;
-
-	max_bits = ft_get_max_bits(stacks->a);
-	i = 0;
-	while (i < max_bits)
-	{
-		size = ft_lstsize(stacks->a);
-		j = 0;
-		while (j++ < size)
-		{
-			if (!((((t_node_content *)stacks->a->content)->rank >> i) & 1))
-				pb(stacks);
-			else
-				ra(stacks);
-				
-		}
-		while (stacks->b)
-			pa(stacks);
-		i++;
-	}
-	return ;
-
 }
