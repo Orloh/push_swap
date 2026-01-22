@@ -20,16 +20,19 @@ void	ft_error(void)
 
 int	main(int argc, char **argv)
 {
-	//t_list	*stack_a;
-	//t_list	*stack_b;
+	t_stacks	*stacks;
 	t_int_arr	num_arr;
 
 	if (argc < 2)
 		return (0);
+	stacks = malloc(sizeof(t_stacks));
+	if (stacks == NULL)
+		ft_error();
+	stacks->a = NULL;
+	stacks->b = NULL;
 	num_arr = ft_parse_args(argc, argv);
 	if (!num_arr.data)
 		ft_error();
-
-	ft_free_int_arr(num_arr);
+	ft_free_int_arr(&num_arr);
 	return (0);
 }
