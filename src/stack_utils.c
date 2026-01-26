@@ -68,6 +68,8 @@ t_int_arr	ft_get_sorted_arr(t_int_arr *arr)
 		return (sorted);
 	ft_memcpy(sorted.data, arr->data, arr->size * sizeof(int));
 	ft_sort_array(&sorted);
+	if (!ft_is_sorted(&sorted))
+		ft_free_int_arr(&sorted);
 	return (sorted);
 }
 
