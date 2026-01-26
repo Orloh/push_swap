@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 //--- COLOR MACROS ---
 #define RED "\033[1;31m"
@@ -81,10 +83,36 @@ t_list	*create_test_stack(int *values, int size)
 	return (stack);
 }
 
-void clear_stacks(t_stacks *stacks)
+void	clear_stacks(t_stacks *stacks)
 {
 	if (stacks->a) ft_lstclear(&(stacks->a), free);
 	if (stacks->b) ft_lstclear(&(stacks->b), free);
+}
+
+void	test_big_sort_silent(int *arr, int size, char *msg)
+{
+	t_stacks	*stacks;
+	int		fd_null;
+	int		stdout_backup;
+
+	stacks = malloc(sizeof(t_stacks));
+	if (!stacks) return ;
+	stacks->a = create_test_stack(arr,size);
+	stacks->b = NULL;
+
+	stdout_backup = dup(STDOUT_FILENO);
+	fd_null = open("/dev/null", O_WRONLY);
+	dup2(fd_null, STDOUT_FILENO);
+
+	ft_big_sort(stacks);
+
+	dup2(stdout_backup, STDOUT_FILENO);
+	close(fd_null);
+	close(stdout_backup);
+
+	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->a) == size, msg);
+	clear_stacks(stacks);
+	free(stacks);
 }
 
 int	main(void)
@@ -527,9 +555,7 @@ int	main(void)
 		arr100[i] = arr100[target];
 		arr100[target] = tmp;
 	}
-	stacks->a = create_test_stack(arr100, size100);
-	ft_big_sort(stacks);
-	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->a) == size100, "Big Sort: 100 elements");
+	test_big_sort_silent(arr100, size100, "Big Sort: 100 random elements\n");
 	clear_stacks(stacks);
 	free(arr100);
 
@@ -545,30 +571,21 @@ int	main(void)
 		arr500[i] = arr500[target];
 		arr500[target] = tmp;
 	}
-	stacks->a = create_test_stack(arr500, size500);
-	ft_big_sort(stacks);
-	assert_test(ft_is_sorted_stack(stacks->a) && ft_lstsize(stacks->a) == size500, "Big Sort: 500 elements");
-	clear_stacks(stacks);
+	test_big_sort_silent(arr500, size500, "Big Sort: 500 random elements\n");
 	free(arr500);
 
-	// Case: 100 elements
+	// Case: 100 sorted elements
 	printf(YELLOW "\nCase: 100 sorted elements\n" RESET);
 	int *arr_sorted = malloc(sizeof(int) * size100);
 	for (int i = 0; i < size100; i++) arr_sorted[i] = i;
-	stacks->a = create_test_stack(arr_sorted, size100);
-	ft_big_sort(stacks);
-	assert_test(ft_is_sorted_stack(stacks->a), "Big Sort: 100 sorted elements");
-	clear_stacks(stacks);
+	test_big_sort_silent(arr_sorted, size100, "Big Sort: 100 sorted elements\n");
 	free(arr100);
 
 	// Case: 100 reverse sorted elements
 	printf(YELLOW "\nCase: 100 reverse sorted elements\n" RESET);
 	int *arr_rev = malloc(sizeof(int) * size100);
 	for (int i = 0; i < size100; i++) arr_rev[i] = 100 - i;
-	stacks->a = create_test_stack(arr_sorted, size100);
-	ft_big_sort(stacks);
-	assert_test(ft_is_sorted_stack(stacks->a), "Big Sort: 100 reverse sorted elements");
-	clear_stacks(stacks);
+	test_big_sort_silent(arr_rev, size100, "Big Sort: 100 reverse sorted elements\n");
 	free(arr100);
 
 	return (0);
