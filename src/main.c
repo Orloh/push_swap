@@ -11,10 +11,11 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <unistd.h>
 
 void	ft_error(void)
 {
-	ft_putstr_fd("Error\n", STDOUT_FILENO);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
 	exit(1);
 }
 
