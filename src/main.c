@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 15:56:36 by orhernan          #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:17 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/01/27 19:52:30 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,26 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (0);
-	stacks = malloc(sizeof(t_stacks));
-	if (stacks == NULL)
-		ft_error();
-	stacks->a = NULL;
-	stacks->b = NULL;
 	num_arr = ft_parse_args(argc, argv);
 	if (!num_arr.data)
 		ft_error();
+	stacks = malloc(sizeof(t_stacks));
+	if (stacks == NULL)
+		ft_error();
+	stacks->a = ft_init_stack(&num_arr);
+	if (!stacks->a)
+	{
+		free(stacks);
+		ft_free_int_arr(&num_arr);
+		ft_error();
+	}
+	stacks->b = NULL;
+	if (num_arr.size <= 5)
+		ft_small_sort(stacks);
+	else
+		ft_big_sort(stacks);	
+	clear_stacks(stacks);
+	free(stacks);
 	ft_free_int_arr(&num_arr);
 	return (0);
 }
