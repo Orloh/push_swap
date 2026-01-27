@@ -11,3 +11,5 @@ unity/
 .test/
 test*.txt
 compile_flags.txt
+push_swap
+checker_linux
