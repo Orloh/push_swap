@@ -119,6 +119,11 @@ void	ft_small_sort(t_stacks *stacks)
 	if (ft_is_sorted_stack(stacks->a))
 		return ;
 	size = ft_lstsize(stacks->a);
+	if (size == 2)
+	{
+		sa(stacks);
+		return ;
+	}
 	if (size == 5)
 		ft_push_min(stacks);
 	if (size >= 4)
