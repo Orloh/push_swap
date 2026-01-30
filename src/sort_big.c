@@ -33,10 +33,14 @@ static int	ft_get_max_bits(t_list *stack)
 	return (max_bits);
 }
 
+static int	ft_get_rank_node(t_list *stack_head)
+{
+	return (((t_node_content *)stack_head->content)->rank);
+}
+
 void	ft_big_sort(t_stacks *stacks)
 {
 	int	i;
-	int	j;
 	int	size;
 	int	max_bits;
 
@@ -45,25 +49,27 @@ void	ft_big_sort(t_stacks *stacks)
 	while (i < max_bits)
 	{
 		size = ft_lstsize(stacks->a);
-		j = 0;
-		while (j++ < size)
+		while (size--)
 		{
-			if (!((((t_node_content *)stacks->a->content)->rank >> i) & 1))
+			if (!((ft_get_rank_node(stacks->a) >> i) & 1))
 				pb(stacks);
 			else
 				ra(stacks);
 		}
-		while (stacks->b)
-			pa(stacks);
+		size = ft_lstsize(stacks->b);
+		while (size--)
+		{
+			if ((ft_get_rank_node(stacks->b) >> (i + 1)) & 1)
+				pa(stacks);
+			else
+				rb(stacks);
+		}
 		i++;
 	}
-	return ;
+	while (stacks->b)
+		pa(stacks);
 }
 
-static int	ft_get_rank_node(t_list *stack_head)
-{
-	return (((t_node_content *)stack_head->content)->rank);
-}
 
 void	ft_big_sort_base3(t_stacks *stacks)
 {
@@ -95,7 +101,7 @@ void	ft_big_sort_base3(t_stacks *stacks)
 		{
 			if (ft_get_rank_node(stacks->b) / pow_3 % 3 == 1)
 				pa(stacks);
-   			else
+			else
 			{
 				rrb(stacks);
 				pa(stacks);
