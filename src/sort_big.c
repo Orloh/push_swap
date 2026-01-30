@@ -33,7 +33,7 @@ static int	ft_get_max_bits(t_list *stack)
 	return (max_bits);
 }
 
-void	ft_big_sort_base1(t_stacks *stacks)
+void	ft_big_sort(t_stacks *stacks)
 {
 	int	i;
 	int	j;
@@ -60,7 +60,12 @@ void	ft_big_sort_base1(t_stacks *stacks)
 	return ;
 }
 
-void	ft_big_sort(t_stacks *stacks)
+static int	ft_get_rank_node(t_list *stack_head)
+{
+	return (((t_node_content *)stack_head->content)->rank);
+}
+
+void	ft_big_sort_base3(t_stacks *stacks)
 {
 	int	i;
 	int	j;
@@ -75,8 +80,7 @@ void	ft_big_sort(t_stacks *stacks)
 		size = ft_lstsize(stacks->a);
 		for (j = 0; j < size; j++)
 		{
-			int rank = ((t_node_content *)stacks->a->content)->rank;
-			int digit = (rank / pow_3) % 3;
+			int digit = (ft_get_rank_node(stacks->a) / pow_3) % 3;
 			if (digit == 0)
 			{
 				pb (stacks);
@@ -88,8 +92,15 @@ void	ft_big_sort(t_stacks *stacks)
 				ra(stacks);
 		}
 		while (stacks->b)
-			pa(stacks);
+		{
+			if (ft_get_rank_node(stacks->b) / pow_3 % 3 == 1)
+				pa(stacks);
+   			else
+			{
+				rrb(stacks);
+				pa(stacks);
+			}
+		}
 		pow_3 *= 3;
 	}
-
 }
