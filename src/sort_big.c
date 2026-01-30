@@ -38,6 +38,32 @@ static int	ft_get_rank_node(t_list *stack_head)
 	return (((t_node_content *)stack_head->content)->rank);
 }
 
+int	ft_is_consecutive(t_list *stack)
+{
+	if (!stack || !stack->next)
+		return (1);
+	while (stack->next)
+	{
+		if (ft_get_rank_node(stack) + 1 != ft_get_rank_node(stack->next))
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
+}
+
+int	ft_is_consecutive_rev(t_list *stack)
+{
+	if (!stack || !stack->next)
+		return (1);
+	while (stack->next)
+	{
+		if (ft_get_rank_node(stack) != ft_get_rank_node(stack->next) + 1)
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
+}
+
 void	ft_big_sort(t_stacks *stacks)
 {
 	int	i;
@@ -55,9 +81,14 @@ void	ft_big_sort(t_stacks *stacks)
 				pb(stacks);
 			else
 				ra(stacks);
+			if (ft_is_consecutive(stacks->a) && ft_is_consecutive_rev(stacks->b))
+			{
+				i = max_bits;
+				break;
+			}
 		}
 		size = ft_lstsize(stacks->b);
-		while (size--)
+		while (size-- && (i != max_bits))
 		{
 			if ((ft_get_rank_node(stacks->b) >> (i + 1)) & 1)
 				pa(stacks);
