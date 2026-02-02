@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_big.c                                          :+:      :+:    :+:   */
+/*   sort_big.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
+/*   By: orhernan <orhernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 18:27:19 by orhernan          #+#    #+#             */
-/*   Updated: 2026/01/19 18:46:02 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/02/02 18:53:02 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "push_swap.h"
 #include <limits.h>
-
 
 static int	ft_get_max_bits(t_list *stack)
 {
@@ -64,15 +63,13 @@ int	ft_is_consecutive_rev(t_list *stack)
 	return (1);
 }
 
-void	ft_big_sort(t_stacks *stacks)
+void	ft_radix_sort(t_stacks *stacks, int max_bits)
 {
 	int	i;
 	int	size;
-	int	max_bits;
 
-	max_bits = ft_get_max_bits(stacks->a);
-	i = 0;
-	while (i < max_bits)
+	i = -1;
+	while (++i < max_bits)
 	{
 		size = ft_lstsize(stacks->a);
 		while (size--)
@@ -81,10 +78,11 @@ void	ft_big_sort(t_stacks *stacks)
 				pb(stacks);
 			else
 				ra(stacks);
-			if (ft_is_consecutive(stacks->a) && ft_is_consecutive_rev(stacks->b))
+			if (ft_is_consecutive(stacks->a) && \
+				ft_is_consecutive_rev(stacks->b))
 			{
 				i = max_bits;
-				break;
+				break ;
 			}
 		}
 		size = ft_lstsize(stacks->b);
@@ -95,49 +93,22 @@ void	ft_big_sort(t_stacks *stacks)
 			else
 				rb(stacks);
 		}
-		i++;
 	}
 	while (stacks->b)
 		pa(stacks);
 }
 
-
-void	ft_big_sort_base3(t_stacks *stacks)
+void	ft_big_sort(t_stacks *stacks)
 {
-	int	i;
-	int	j;
-	int	size;
-	int	max_trits;
-	int	pow_3;
-
-	max_trits = 6;
-	pow_3 = 1;
-	for(i = 0; i < max_trits; i++)
+	if (ft_is_consecutive(stacks->a))
+		return ;
+	if (ft_is_consecutive_rev(stacks->a))
 	{
-		size = ft_lstsize(stacks->a);
-		for (j = 0; j < size; j++)
-		{
-			int digit = (ft_get_rank_node(stacks->a) / pow_3) % 3;
-			if (digit == 0)
-			{
-				pb (stacks);
-				rb (stacks);
-			}
-			else if (digit == 1)
-				pb(stacks);
-			else
-				ra(stacks);
-		}
-		while (stacks->b)
-		{
-			if (ft_get_rank_node(stacks->b) / pow_3 % 3 == 1)
-				pa(stacks);
-			else
-			{
-				rrb(stacks);
-				pa(stacks);
-			}
-		}
-		pow_3 *= 3;
+		while (ft_lstsize(stacks->a) > 0)
+			pb(stacks);
+		while (ft_lstsize(stacks->b) > 0)
+			pa(stacks);
+		return ;
 	}
+	ft_radix_sort(stacks, ft_get_max_bits(stacks->a));
 }

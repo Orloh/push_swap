@@ -23,12 +23,6 @@
 # include <stdio.h>
 # include <fcntl.h>
 
-//--- COLOR MACROS ---
-#define RED "\033[1;31m"
-#define GREEN "\033[1;32m"
-#define YELLOW "\033[1;33m"
-#define RESET "\033[0m"
-
 typedef struct s_node_content
 {
 	int	value;
@@ -67,14 +61,6 @@ void		ft_small_sort(t_stacks *stacks);
 void		ft_big_sort(t_stacks *stacks);
 int			ft_is_sorted_stack(t_list *stack);
 int			ft_is_sorted(t_int_arr *arr);
-
-
-void	 print_arr(t_int_arr arr);
-t_node_content	*ft_new_content(int val, int rank);
-void	print_stack(char *name, t_list *s);
-void	assert_test(int condition, char *description);
-t_list	*create_test_stack(int *values, int size);
-void	clear_stacks(t_stacks *stacks);
-void	test_big_sort_silent(int *arr, int size, char *msg);
+void		ft_clear_stacks(t_stacks *stacks);
 
 #endif

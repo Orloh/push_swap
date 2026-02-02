@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
+/*   By: orhernan <orhernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 00:21:05 by orhernan          #+#    #+#             */
-/*   Updated: 2026/01/22 17:56:20 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/02/02 18:49:21 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
+
+void	ft_clear_stacks(t_stacks *stacks)
+{
+	if (!stacks)
+		return ;
+	if (stacks->a)
+		ft_lstclear(&(stacks->a), free);
+	if (stacks->b)
+		ft_lstclear(&(stacks->b), free);
+}
 
 /*
  * Searches for a value in a sorted integer array and returns its index(rank).

@@ -21,13 +21,12 @@ PRINTF_DIR	:= ft_printf
 
 # Files
 NAME		:= push_swap
-TEST_NAME	:= test_push_swap.out
 LIBFT		:= $(LIBFT_DIR)/libft.a
 PRINTF		:= $(PRINTF_DIR)/libftprintf.a
 
 # Tools & Flags
 CC		:= cc
-CFLAGS		:= -Wall -Wextra -Werror -I $(INC_DIR) -g -O0
+CFLAGS		:= -Wall -Wextra -Werror -I $(INC_DIR)
 RM		:= rm -f
 AR		:= ar rcs
 
@@ -40,7 +39,6 @@ SRC		:= $(addprefix $(SRC_DIR)/,	\
 		push_op.c	\
 		swap_op.c	\
 		rotate_op.c	\
-		test_utils.c	\
 		reverse_rotate_op.c)
 OBJ 		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
@@ -59,15 +57,8 @@ $(NAME): $(PRINTF) $(OBJ)
 	printf "Creating $(NAME) ...\n"
 	$(CC) $(CFLAGS) $(SRC_DIR)/main.c $(OBJ) $(PRINTF) -o $@
 
-$(TEST_NAME): $(SRC_DIR)/main_test.c $(PRINTF) $(OBJ)
-	printf "Creating $(TEST_NAME)...\n"
-	$(CC) $(CFLAGS) $< $(OBJ) $(PRINTF) -fsanitize=leak -o $@
-
 # Targets
 all: $(NAME)
-
-test: $(TEST_NAME)
-	./$<
 
 clean:
 	@printf "Cleaning up object files\n\n"
@@ -82,4 +73,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re

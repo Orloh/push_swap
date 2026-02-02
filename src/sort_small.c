@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_small.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
+/*   By: orhernan <orhernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 14:13:21 by orhernan          #+#    #+#             */
-/*   Updated: 2025/12/28 22:43:56 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/02/02 18:20:31 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_is_sorted_stack(t_list *stack)
 	}
 	return (1);
 }
-
 
 /*
  * Sorts a stack of exactly three elements using a maximum of two moves.
