@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 21:22:39 by orhernan          #+#    #+#             */
-/*   Updated: 2026/02/04 21:24:23 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/02/04 21:33:55 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,3 @@ int	ft_is_consecutive_rev(t_list *stack)
 	}
 	return (1);
 }
-
