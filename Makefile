@@ -6,7 +6,7 @@
 #    By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 17:19:15 by orhernan          #+#    #+#              #
-#    Updated: 2026/01/27 19:04:19 by orhernan         ###   ########.fr        #
+#    Updated: 2026/02/04 21:31:48 by orhernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ AR		:= ar rcs
 SRC		:= $(addprefix $(SRC_DIR)/,	\
 		sort_small.c	\
 		sort_big.c	\
+		sort_utils.c	\
 		parse_utils.c	\
 		stack_utils.c	\
 		push_op.c	\
