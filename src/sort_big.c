@@ -63,36 +63,55 @@ int	ft_is_consecutive_rev(t_list *stack)
 	return (1);
 }
 
-void	ft_radix_sort(t_stacks *stacks, int max_bits)
+void	ft_push_zero_bit(t_stacks *s, int bit, int *early_exit)
 {
-	int	i;
 	int	size;
 
-	i = -1;
-	while (++i < max_bits)
+	size = ft_lstsize(s->a);
+	while (size--)
 	{
-		size = ft_lstsize(stacks->a);
-		while (size--)
+		if (!((ft_get_rank_node(s->a) >> bit) & 1))
+			pb(s);
+		else
+			ra(s);
+		if (ft_is_consecutive(s->a) && ft_is_consecutive_rev(s->b))
 		{
-			if (!((ft_get_rank_node(stacks->a) >> i) & 1))
-				pb(stacks);
-			else
-				ra(stacks);
-			if (ft_is_consecutive(stacks->a) && \
-				ft_is_consecutive_rev(stacks->b))
-			{
-				i = max_bits;
-				break ;
-			}
+			*early_exit = 1;
+			break ;
 		}
-		size = ft_lstsize(stacks->b);
-		while (size-- && (i != max_bits))
-		{
-			if ((ft_get_rank_node(stacks->b) >> (i + 1)) & 1)
-				pa(stacks);
-			else
-				rb(stacks);
-		}
+	}
+}
+
+void	ft_push_one_next_bit(t_stacks *s, int bit, int early_exit)
+{
+	int	size;
+
+	size = ft_lstsize(s->b);
+
+	if (early_exit)
+		return ;
+	while (size--)
+	{
+		if ((ft_get_rank_node(s->b) >> (bit + 1)) & 1)
+			pa(s);
+		else
+			rb(s);
+	}
+	
+}
+
+void	ft_radix_sort(t_stacks *stacks, int max_bits)
+{
+	int	bit;
+	int	early_exit;
+
+
+	early_exit = 0;
+	bit = -1;
+	while (++bit < max_bits && !early_exit) 
+	{
+		ft_push_zero_bit(stacks, bit, &early_exit);
+		ft_push_one_next_bit(stacks, bit, early_exit);
 	}
 	while (stacks->b)
 		pa(stacks);
