@@ -6,7 +6,7 @@
 /*   By: orhernan <ohercelli@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 00:46:34 by orhernan          #+#    #+#             */
-/*   Updated: 2026/01/27 18:35:56 by orhernan         ###   ########.fr       */
+/*   Updated: 2026/02/04 21:31:18 by orhernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,8 @@
 
 # include "ft_printf.h"
 # include "libft.h"
-
 # include <unistd.h>
 # include <stdlib.h>
-# include <time.h>
-
-# include <stdio.h>
-# include <fcntl.h>
 
 typedef struct s_node_content
 {
@@ -62,5 +57,9 @@ void		ft_big_sort(t_stacks *stacks);
 int			ft_is_sorted_stack(t_list *stack);
 int			ft_is_sorted(t_int_arr *arr);
 void		ft_clear_stacks(t_stacks *stacks);
+int			ft_get_max_bits(t_list *stack);
+int			ft_get_rank_node(t_list *stack_head);
+int			ft_is_consecutive(t_list *stack);
+int			ft_is_consecutive_rev(t_list *stack);
 
 #endif
